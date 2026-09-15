@@ -1,0 +1,2142 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="约稿管家">
+<meta name="theme-color" content="#f2f2f7">
+<meta name="format-detection" content="telephone=no">
+<title>约稿尾款管家</title>
+<style>
+/* ============================================================
+   约稿尾款管家 V13
+   主题系统：所有颜色走 CSS 变量，data-theme 切换
+   ============================================================ */
+:root{
+  /* ---- 极简白（默认） ---- */
+  --bg:#f2f2f7; --bg-image:none;
+  --surface:#ffffff; --surface-2:#f2f2f7; --surface-3:#e9e9ee;
+  --border:#e3e3e8; --border-soft:#f0f0f3;
+  --text:#1d1d1f; --text-mid:#6e6e73; --text-dim:#8e8e93;
+  --accent:#5856d6; --accent-light:#7a78e8; --accent-soft:rgba(88,86,214,.10);
+  --accent-glow:rgba(88,86,214,.28); --on-accent:#ffffff;
+  --green:#1f9e57; --green-soft:rgba(31,158,87,.10);
+  --orange:#c97800; --orange-soft:rgba(201,120,0,.10);
+  --red:#d92f26; --red-soft:rgba(217,47,38,.08);
+  --tabbar:rgba(255,255,255,.82); --sheet-bg:#ffffff; --scrim:rgba(0,0,0,.36);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.05),0 1px 2px rgba(0,0,0,.03);
+  --shadow-md:0 6px 20px rgba(0,0,0,.07);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.10);
+  --glass-blur:blur(0px);
+  --field-bg:var(--surface-2); --field-border:transparent;
+  --radius:16px; --tab-h:58px;
+  --safe-top:env(safe-area-inset-top,0px);
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+}
+
+/* ---- 薄巧（薄荷 + 巧克力） ---- */
+html[data-theme="mintchoco"]{
+  --bg:#f3f7f2; --bg-image:linear-gradient(165deg,#e6f4ec 0%,#f7f4ea 52%,#eaf3ee 100%);
+  --surface:rgba(255,255,255,.80); --surface-2:rgba(255,255,255,.58); --surface-3:rgba(255,255,255,.92);
+  --border:rgba(58,43,35,.08); --border-soft:rgba(58,43,35,.05);
+  --text:#3a2b23; --text-mid:#6d5b4f; --text-dim:#93857a;
+  --accent:#2a8f6f; --accent-light:#37a883; --accent-soft:rgba(42,143,111,.12);
+  --accent-glow:rgba(42,143,111,.26); --on-accent:#ffffff;
+  --green:#2f9e6e; --green-soft:rgba(47,158,110,.13);
+  --orange:#a86b28; --orange-soft:rgba(168,107,40,.13);
+  --red:#bf4f45; --red-soft:rgba(191,79,69,.10);
+  --tabbar:rgba(255,255,255,.72); --sheet-bg:rgba(255,255,255,.94); --scrim:rgba(46,34,28,.38);
+  --shadow-sm:0 4px 18px rgba(58,43,35,.06);
+  --shadow-md:0 10px 32px rgba(58,43,35,.09);
+  --shadow-lg:0 16px 44px rgba(58,43,35,.12);
+  --glass-blur:blur(20px) saturate(1.6);
+}
+
+/* ---- 海盐 ---- */
+html[data-theme="sea"]{
+  --bg:#f1f6fa; --bg-image:linear-gradient(170deg,#e8f2fa 0%,#f4f8fb 55%,#eaf4f7 100%);
+  --surface:rgba(255,255,255,.82); --surface-2:rgba(255,255,255,.6); --surface-3:rgba(255,255,255,.95);
+  --border:rgba(27,39,51,.08); --border-soft:rgba(27,39,51,.05);
+  --text:#1b2733; --text-mid:#5d7183; --text-dim:#8798a8;
+  --accent:#2b76c9; --accent-light:#4a93e0; --accent-soft:rgba(43,118,201,.11);
+  --accent-glow:rgba(43,118,201,.25); --on-accent:#ffffff;
+  --green:#1c9a72; --green-soft:rgba(28,154,114,.11);
+  --orange:#c07a1e; --orange-soft:rgba(192,122,30,.11);
+  --red:#cf4438; --red-soft:rgba(207,68,56,.09);
+  --tabbar:rgba(255,255,255,.74); --sheet-bg:rgba(255,255,255,.95); --scrim:rgba(20,32,44,.36);
+  --shadow-sm:0 4px 18px rgba(27,39,51,.06);
+  --shadow-md:0 10px 32px rgba(27,39,51,.09);
+  --shadow-lg:0 16px 44px rgba(27,39,51,.12);
+  --glass-blur:blur(20px) saturate(1.6);
+}
+
+/* ---- 蜜桃乌龙 ---- */
+html[data-theme="peach"]{
+  --bg:#fdf4ef; --bg-image:linear-gradient(170deg,#fdeee6 0%,#fdf6f1 55%,#fbeae2 100%);
+  --surface:rgba(255,255,255,.84); --surface-2:rgba(255,255,255,.6); --surface-3:rgba(255,255,255,.95);
+  --border:rgba(58,42,34,.08); --border-soft:rgba(58,42,34,.05);
+  --text:#3a2a22; --text-mid:#7a6357; --text-dim:#a08d82;
+  --accent:#c9613c; --accent-light:#dd7c57; --accent-soft:rgba(201,97,60,.11);
+  --accent-glow:rgba(201,97,60,.25); --on-accent:#ffffff;
+  --green:#2f9e6e; --green-soft:rgba(47,158,110,.11);
+  --orange:#c07f22; --orange-soft:rgba(192,127,34,.12);
+  --red:#c8453a; --red-soft:rgba(200,69,58,.09);
+  --tabbar:rgba(255,255,255,.75); --sheet-bg:rgba(255,255,255,.95); --scrim:rgba(58,42,34,.36);
+  --shadow-sm:0 4px 18px rgba(58,42,34,.06);
+  --shadow-md:0 10px 32px rgba(58,42,34,.09);
+  --shadow-lg:0 16px 44px rgba(58,42,34,.12);
+  --glass-blur:blur(20px) saturate(1.6);
+}
+
+/* ---- 抹茶拿铁 ---- */
+html[data-theme="matcha"]{
+  --bg:#f5f6ee; --bg-image:linear-gradient(170deg,#eef1e2 0%,#f8f7f0 55%,#edf2e4 100%);
+  --surface:rgba(255,255,255,.84); --surface-2:rgba(255,255,255,.6); --surface-3:rgba(255,255,255,.95);
+  --border:rgba(47,53,36,.09); --border-soft:rgba(47,53,36,.05);
+  --text:#2f3524; --text-mid:#6b7259; --text-dim:#949a82;
+  --accent:#5f8437; --accent-light:#779a4c; --accent-soft:rgba(95,132,55,.12);
+  --accent-glow:rgba(95,132,55,.25); --on-accent:#ffffff;
+  --green:#2f9e6e; --green-soft:rgba(47,158,110,.11);
+  --orange:#b57f26; --orange-soft:rgba(181,127,38,.12);
+  --red:#bf4a42; --red-soft:rgba(191,74,66,.09);
+  --tabbar:rgba(255,255,255,.75); --sheet-bg:rgba(255,255,255,.95); --scrim:rgba(47,53,36,.36);
+  --shadow-sm:0 4px 18px rgba(47,53,36,.06);
+  --shadow-md:0 10px 32px rgba(47,53,36,.09);
+  --shadow-lg:0 16px 44px rgba(47,53,36,.12);
+  --glass-blur:blur(20px) saturate(1.6);
+}
+
+/* ---- 薰衣草 ---- */
+html[data-theme="lavender"]{
+  --bg:#f5f3fb; --bg-image:linear-gradient(170deg,#efeafa 0%,#f8f5fd 55%,#eee9fa 100%);
+  --surface:rgba(255,255,255,.84); --surface-2:rgba(255,255,255,.6); --surface-3:rgba(255,255,255,.95);
+  --border:rgba(43,37,64,.08); --border-soft:rgba(43,37,64,.05);
+  --text:#2b2540; --text-mid:#645c80; --text-dim:#8d87a3;
+  --accent:#6a55c9; --accent-light:#8574dd; --accent-soft:rgba(106,85,201,.11);
+  --accent-glow:rgba(106,85,201,.25); --on-accent:#ffffff;
+  --green:#2f9e6e; --green-soft:rgba(47,158,110,.11);
+  --orange:#c08420; --orange-soft:rgba(192,132,32,.12);
+  --red:#c94a5c; --red-soft:rgba(201,74,92,.09);
+  --tabbar:rgba(255,255,255,.75); --sheet-bg:rgba(255,255,255,.95); --scrim:rgba(43,37,64,.36);
+  --shadow-sm:0 4px 18px rgba(43,37,64,.06);
+  --shadow-md:0 10px 32px rgba(43,37,64,.09);
+  --shadow-lg:0 16px 44px rgba(43,37,64,.12);
+  --glass-blur:blur(20px) saturate(1.6);
+}
+
+/* ---- 樱花 ---- */
+html[data-theme="sakura"]{
+  --bg:#fdf3f5; --bg-image:linear-gradient(170deg,#fce8ee 0%,#fdf6f8 55%,#fbe6ec 100%);
+  --surface:rgba(255,255,255,.84); --surface-2:rgba(255,255,255,.6); --surface-3:rgba(255,255,255,.95);
+  --border:rgba(58,38,48,.08); --border-soft:rgba(58,38,48,.05);
+  --text:#3a2630; --text-mid:#7d5f6b; --text-dim:#a38e97;
+  --accent:#c94a76; --accent-light:#dd6a92; --accent-soft:rgba(201,74,118,.11);
+  --accent-glow:rgba(201,74,118,.25); --on-accent:#ffffff;
+  --green:#2f9e6e; --green-soft:rgba(47,158,110,.11);
+  --orange:#c07f22; --orange-soft:rgba(192,127,34,.12);
+  --red:#cf3b52; --red-soft:rgba(207,59,82,.09);
+  --tabbar:rgba(255,255,255,.75); --sheet-bg:rgba(255,255,255,.95); --scrim:rgba(58,38,48,.36);
+  --shadow-sm:0 4px 18px rgba(58,38,48,.06);
+  --shadow-md:0 10px 32px rgba(58,38,48,.09);
+  --shadow-lg:0 16px 44px rgba(58,38,48,.12);
+  --glass-blur:blur(20px) saturate(1.6);
+}
+
+/* ---- 深夜 ---- */
+html[data-theme="night"]{
+  --bg:#13141c; --bg-image:linear-gradient(170deg,#16171f 0%,#101119 100%);
+  --surface:#1b1d28; --surface-2:#232634; --surface-3:#2b2f42;
+  --border:#2e3245; --border-soft:#242838;
+  --text:#e6e8f2; --text-mid:#a9b0c8; --text-dim:#7f87a3;
+  --accent:#7aa2f7; --accent-light:#9bb8ff; --accent-soft:rgba(122,162,247,.16);
+  --accent-glow:rgba(0,0,0,.55); --on-accent:#10121a;
+  --green:#9ece6a; --green-soft:rgba(158,206,106,.14);
+  --orange:#e0af68; --orange-soft:rgba(224,175,104,.14);
+  --red:#f7768e; --red-soft:rgba(247,118,142,.14);
+  --tabbar:rgba(19,20,28,.84); --sheet-bg:#1b1d28; --scrim:rgba(0,0,0,.6);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.4);
+  --shadow-md:0 6px 20px rgba(0,0,0,.45);
+  --shadow-lg:0 12px 40px rgba(0,0,0,.55);
+  --glass-blur:blur(0px);
+}
+
+/* 毛玻璃主题的输入框底色（半透明卡片上需要一点实色，否则看不出输入框） */
+html[data-theme="mintchoco"],html[data-theme="sea"],html[data-theme="peach"],
+html[data-theme="matcha"],html[data-theme="lavender"],html[data-theme="sakura"]{
+  --field-bg:rgba(255,255,255,.62);
+  --field-border:rgba(0,0,0,.075);
+}
+html[data-theme="night"]{ --field-bg:#232634; --field-border:#2e3245; }
+
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}html{-webkit-text-size-adjust:100%;overscroll-behavior:none;background:var(--bg);}
+html,body{min-height:100%;}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  color:var(--text);font-size:16px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;overscroll-behavior-y:none;
+  touch-action:pan-y;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;
+  background-color:var(--bg);background-image:var(--bg-image);background-size:cover;background-position:center;
+  transition:background-color .35s ease;
+}
+input,textarea,button,select{font-family:inherit;}
+input,textarea{-webkit-user-select:text;user-select:text;}
+
+/* ===== App Shell ===== */
+#app{position:relative;z-index:1;min-height:100dvh;display:flex;flex-direction:column;}
+
+.top-bar{
+  flex-shrink:0;position:sticky;top:0;z-index:50;
+  padding:calc(var(--safe-top) + 10px) 18px 10px;
+  background:transparent;
+  transition:background .25s,box-shadow .25s,backdrop-filter .25s;
+}
+.top-bar.scrolled{
+  background:var(--tabbar);
+  backdrop-filter:blur(18px) saturate(1.6);-webkit-backdrop-filter:blur(18px) saturate(1.6);
+  box-shadow:0 1px 0 var(--border-soft);
+}
+.top-bar h1{font-size:28px;font-weight:800;letter-spacing:-.7px;line-height:1.2;}
+.top-bar h1 .accent{color:var(--accent);}
+.top-bar .subtitle{font-size:13px;color:var(--text-dim);margin-top:2px;}
+.tb-actions{display:flex;gap:8px;flex-shrink:0;}
+.icon-btn{
+  width:38px;height:38px;border:none;border-radius:50%;
+  background:var(--surface);color:var(--text);
+  font-size:17px;line-height:1;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .12s,background .2s;
+}
+.icon-btn:active{transform:scale(.9);}
+
+/* ===== 底部导航栏 ===== */
+.tab-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:100;
+  display:flex;align-items:stretch;
+  max-width:500px;margin:0 auto;
+  height:calc(var(--tab-h) + var(--safe-bottom));
+  padding-bottom:var(--safe-bottom);
+  background:var(--tabbar);
+  backdrop-filter:blur(20px) saturate(1.8);-webkit-backdrop-filter:blur(20px) saturate(1.8);
+  box-shadow:0 -1px 0 var(--border-soft),0 -8px 24px rgba(0,0,0,.04);
+}
+.tab-btn{
+  flex:1;min-width:0;position:relative;
+  border:none;background:transparent;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  padding:6px 2px 7px;
+  color:var(--text-dim);font-size:10.5px;font-weight:600;letter-spacing:.2px;
+  transition:color .18s ease,transform .14s ease;
+  -webkit-user-select:none;user-select:none;
+}
+.tab-btn .tab-icon{
+  display:flex;align-items:center;justify-content:center;
+  width:46px;height:26px;border-radius:13px;
+  font-size:17px;line-height:1;
+  filter:grayscale(.55);opacity:.72;
+  transition:background .22s ease,transform .24s cubic-bezier(.34,1.56,.64,1),filter .22s ease,opacity .22s ease;
+}
+.tab-btn.active{color:var(--accent);}
+.tab-btn.active .tab-icon{
+  background:var(--accent-soft);
+  filter:none;opacity:1;
+  transform:translateY(-1px) scale(1.06);
+}
+.tab-btn:active{transform:scale(.92);}
+.tab-btn:active .tab-icon{filter:none;opacity:1;}
+
+.content{flex:1;padding:0 16px calc(var(--tab-h) + var(--safe-bottom) + 28px);}.view{display:none;}
+.view.active{display:block;animation:viewIn .26s cubic-bezier(.32,.72,0,1);}
+@keyframes viewIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+
+/* ===== Cards 通用毛玻璃 ===== */
+.stat-card,.comm-card,.schedule-item,.calc-card,.pressure-card,.gcard,.trend-card,
+.month-section,.chip,.nav-arrow,.search-input,.icon-btn,.seg-control,.s-item,.theme-card{
+  backdrop-filter:var(--glass-blur);-webkit-backdrop-filter:var(--glass-blur);
+}
+
+/* ===== Stat ===== */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
+.stat-card{
+  background:var(--surface);border-radius:var(--radius);padding:16px;
+  position:relative;overflow:hidden;box-shadow:var(--shadow-sm);
+}
+.stat-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:3px;background:var(--accent);}
+.stat-card.green::before{background:var(--green);}
+.stat-card.orange::before{background:var(--orange);}
+.stat-card.red::before{background:var(--red);}
+.stat-label{font-size:12px;color:var(--text-dim);margin-bottom:6px;font-weight:500;}
+.stat-value{font-size:21px;font-weight:700;letter-spacing:-.5px;font-variant-numeric:tabular-nums;}
+.stat-value.v-orange{color:var(--orange);}
+.stat-value.v-green{color:var(--green);}
+.stat-sub{font-size:11px;color:var(--text-dim);margin-top:4px;}
+
+/* ===== Section ===== */
+.section{margin-top:26px;}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;padding:0 4px;}
+.section-header h2{font-size:17px;font-weight:700;}
+
+/* ===== Commission Card ===== */
+.comm-card{
+  background:var(--surface);border-radius:var(--radius);padding:15px 16px;
+  margin-bottom:10px;box-shadow:var(--shadow-sm);
+  transition:transform .14s,opacity .2s;
+}
+.comm-card:active{transform:scale(.985);}
+.cc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;}
+.cc-title{font-size:16px;font-weight:600;line-height:1.35;}
+.cc-artist{font-size:12.5px;color:var(--text-dim);margin-top:3px;}
+.cc-money{text-align:right;flex-shrink:0;}
+.cc-rem{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.3px;}
+.cc-rem.pending{color:var(--orange);}
+.cc-rem.done{color:var(--green);}
+.cc-sub{font-size:11px;color:var(--text-dim);margin-top:1px;}
+.cc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;gap:8px;}
+.cc-more{
+  border:none;background:transparent;color:var(--text-dim);
+  font-size:20px;line-height:1;width:34px;height:30px;border-radius:9px;
+  cursor:pointer;flex-shrink:0;
+}
+.cc-more:active{background:var(--surface-2);color:var(--text);}
+
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap;}
+.tag-pending{background:var(--orange-soft);color:var(--orange);}
+.tag-done{background:var(--green-soft);color:var(--green);}
+.tag-info{background:var(--accent-soft);color:var(--accent);}
+
+.progress-row{display:flex;align-items:center;gap:3px;margin-top:10px;flex-wrap:wrap;}
+.pdot{width:11px;height:11px;border-radius:50%;border:2px solid var(--border);background:transparent;flex-shrink:0;padding:0;cursor:pointer;}
+.pdot.done{background:var(--green);border-color:var(--green);}
+.pline{width:14px;height:2px;background:var(--border);flex-shrink:0;}
+.pline.done{background:var(--green);}
+.progress-labels{font-size:11px;color:var(--text-dim);margin-top:5px;line-height:1.5;}
+
+/* ===== Buttons ===== */
+.btn{
+  border:none;border-radius:12px;cursor:pointer;font-size:15px;font-weight:600;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  min-height:44px;padding:0 18px;transition:transform .12s,background .18s,opacity .18s;
+}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--accent);color:var(--on-accent);box-shadow:0 3px 12px var(--accent-glow);}
+.btn-ghost{background:var(--surface-3);color:var(--text);}
+.btn-danger{background:var(--red-soft);color:var(--red);}
+.btn-sm{min-height:34px;padding:0 14px;font-size:13px;border-radius:10px;}
+.btn-block{width:100%;}
+.btn[disabled]{opacity:.45;pointer-events:none;}
+
+.fab{
+  position:fixed;bottom:calc(var(--tab-h) + var(--safe-bottom) + 18px);right:20px;
+  width:54px;height:54px;border-radius:50%;background:var(--accent);color:var(--on-accent);
+  border:none;font-size:27px;font-weight:300;line-height:1;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:0 6px 20px var(--accent-glow);z-index:60;
+  transition:transform .16s cubic-bezier(.34,1.56,.64,1),opacity .2s;
+}
+.fab:active{transform:scale(.88);}
+.fab.hide{opacity:0;pointer-events:none;transform:scale(.6);}
+
+/* ===== Search / Filter ===== */
+.search-wrap{position:relative;margin:12px 0;}
+.search-wrap .s-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:14px;opacity:.5;}
+.search-input{
+  width:100%;padding:11px 14px 11px 36px;background:var(--surface);
+  border:none;border-radius:12px;color:var(--text);font-size:16px;
+  min-height:42px;box-shadow:var(--shadow-sm);
+}
+.search-input:focus{outline:none;box-shadow:0 0 0 2px var(--accent-soft),var(--shadow-sm);}
+.search-input::placeholder{color:var(--text-dim);}
+.filter-chips{display:flex;gap:8px;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:2px 0 6px;scrollbar-width:none;}
+.filter-chips::-webkit-scrollbar{display:none;}
+.chip{
+  padding:7px 15px;border-radius:20px;background:var(--surface);border:none;color:var(--text-dim);
+  font-size:13px;white-space:nowrap;cursor:pointer;flex-shrink:0;font-weight:500;
+  box-shadow:var(--shadow-sm);transition:all .16s;
+}
+.chip.active{background:var(--accent);color:var(--on-accent);box-shadow:0 3px 12px var(--accent-glow);}
+
+/* ===== Schedule ===== */
+.schedule-nav{display:flex;align-items:center;justify-content:center;gap:14px;margin:16px 0 6px;}
+.schedule-month{
+  font-size:19px;font-weight:700;min-width:150px;text-align:center;
+  background:none;border:none;color:var(--text);cursor:pointer;padding:6px 4px;border-radius:10px;
+}
+.schedule-month .hint{display:block;font-size:11px;font-weight:500;color:var(--accent);margin-top:-2px;}
+.nav-arrow{
+  width:40px;height:40px;border-radius:12px;background:var(--surface);border:none;color:var(--text);
+  font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  box-shadow:var(--shadow-sm);
+}
+.nav-arrow:active{background:var(--surface-2);}
+.schedule-summary{
+  padding:14px 16px;background:var(--accent-soft);border-radius:12px;font-size:14px;color:var(--accent);
+  margin:10px 0 12px;font-weight:600;display:flex;justify-content:space-between;align-items:center;
+}
+
+/* ===== Month sections ===== */
+.month-section{background:var(--surface);border-radius:var(--radius);overflow:hidden;margin-bottom:10px;box-shadow:var(--shadow-sm);}
+.month-header{display:flex;align-items:center;padding:14px 16px;cursor:pointer;gap:8px;user-select:none;transition:background .15s;}
+.month-header:active{background:var(--surface-2);}
+.month-header .m-name{font-weight:700;font-size:16px;flex-shrink:0;}
+.month-header .m-summary{flex:1;text-align:right;font-size:12.5px;color:var(--text-dim);}
+.month-header .m-arrow{font-size:13px;color:var(--text-dim);flex-shrink:0;transition:transform .22s;}
+.month-section.expanded .m-arrow{transform:rotate(90deg);}
+.month-body{padding:0 10px 10px;}
+.month-body .comm-card{box-shadow:none;background:var(--surface-2);margin-bottom:8px;}
+
+/* ===== Calculator / Pressure ===== */
+.calc-card,.pressure-card{background:var(--surface);border-radius:20px;padding:20px;margin-top:16px;box-shadow:var(--shadow-md);}
+.calc-intro{padding:14px 16px;background:var(--surface-2);border-radius:12px;font-size:13px;line-height:1.65;color:var(--text-dim);margin-bottom:18px;}
+.calc-intro b{color:var(--text);font-weight:600;}
+.calc-result{margin-top:18px;padding:26px 22px;border-radius:16px;text-align:center;background:var(--surface-2);}
+.calc-result .label{font-size:13px;color:var(--text-dim);margin-bottom:8px;}
+.calc-result .amount{font-size:34px;font-weight:800;letter-spacing:-1px;font-variant-numeric:tabular-nums;}
+.calc-result .amount.green{color:var(--green);}
+.calc-result .amount.red{color:var(--red);}
+.calc-breakdown{margin-top:12px;display:flex;flex-direction:column;gap:8px;}
+.breakdown-row{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:var(--surface-2);border-radius:12px;font-size:14px;gap:10px;}
+.breakdown-row.highlight{background:var(--accent-soft);}
+.breakdown-row.green-row{background:var(--green-soft);}
+.breakdown-row .b-label{color:var(--text-dim);font-size:12px;line-height:1.5;}
+.breakdown-row .b-value{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.breakdown-row.highlight .b-value{color:var(--accent);}
+.breakdown-row.green-row .b-value{color:var(--green);}
+
+.pressure-result{margin-top:18px;padding:26px 20px;border-radius:20px;text-align:center;background:var(--surface-2);transition:background .3s;}
+.pressure-result.safe{background:var(--green-soft);}
+.pressure-result.warn{background:var(--orange-soft);}
+.pressure-result.danger{background:var(--red-soft);}
+.pressure-result .emoji{font-size:44px;margin-bottom:8px;line-height:1;}
+.pressure-result .verdict{font-size:20px;font-weight:800;margin-bottom:6px;}
+.pressure-result.safe .verdict{color:var(--green);}
+.pressure-result.warn .verdict{color:var(--orange);}
+.pressure-result.danger .verdict{color:var(--red);}
+.pressure-result .detail{font-size:14px;color:var(--text-dim);}
+.pressure-breakdown{margin-top:14px;display:flex;flex-direction:column;gap:8px;}
+.pb-row{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--surface-2);border-radius:12px;font-size:14px;gap:10px;}
+.pb-row .pb-label{color:var(--text-dim);font-size:13px;}
+.pb-row .pb-value{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap;}
+.pb-row.income .pb-value{color:var(--green);}
+.pb-row.expense .pb-value{color:var(--red);}
+.pb-divider{height:1px;background:var(--border);margin:2px 0;}
+.auto-fill{font-size:11px;color:var(--accent);background:var(--accent-soft);padding:5px 10px;border-radius:8px;font-weight:600;white-space:nowrap;flex-shrink:0;}
+
+/* ===== Segment ===== */
+.seg-control{display:flex;background:var(--surface-2);border-radius:13px;padding:4px;margin:16px 0 0;gap:3px;}
+.seg-btn{
+  flex:1;border:none;background:transparent;color:var(--text-dim);font-size:12px;font-weight:600;
+  padding:9px 4px;border-radius:10px;cursor:pointer;transition:all .2s;white-space:nowrap;
+}
+.seg-btn.active{background:var(--surface);color:var(--text);box-shadow:var(--shadow-sm);}
+.lab-sub{display:none;}
+.lab-sub.active{display:block;}
+
+/* ===== Guarantee / Wish ===== */
+.gcard{background:var(--surface);border-radius:14px;padding:16px;margin-bottom:10px;box-shadow:var(--shadow-sm);transition:opacity .2s,transform .14s;}
+.gcard:active{transform:scale(.99);}
+.gcard.done{opacity:.52;}
+.gcard-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;}
+.gcard-title{font-size:16px;font-weight:600;}
+.gcard-meta{font-size:12.5px;color:var(--text-dim);margin-top:3px;}
+.gcard-note{font-size:13px;color:var(--text-mid);margin-top:8px;line-height:1.55;}
+.gcard-actions{display:flex;gap:8px;margin-top:12px;}
+.gcard-actions button{
+  border:none;background:var(--surface-2);color:var(--text-mid);font-size:12.5px;
+  padding:8px 13px;border-radius:9px;cursor:pointer;font-weight:500;min-height:34px;
+}
+.gcard-actions button:active{background:var(--surface-3);}
+.gcard-actions .del-btn{color:var(--red);}
+
+/* ===== Trend ===== */
+.trend-card{background:var(--surface);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);}
+.trend-card h3{font-size:16px;font-weight:700;margin-bottom:16px;}
+.trend-bars{display:flex;flex-direction:column;gap:12px;}
+.trend-bar-row{display:flex;align-items:center;gap:10px;}
+.trend-bar-label{width:52px;font-size:12.5px;color:var(--text-dim);flex-shrink:0;font-weight:500;}
+.trend-bar-track{flex:1;height:28px;background:var(--surface-2);border-radius:8px;overflow:hidden;}
+.trend-bar-fill{
+  height:100%;background:linear-gradient(90deg,var(--accent) 0%,var(--accent-light) 100%);
+  border-radius:8px;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;
+  color:var(--on-accent);font-size:12px;font-weight:700;min-width:2px;transition:width .4s cubic-bezier(.32,.72,0,1);
+  font-variant-numeric:tabular-nums;
+}
+.trend-stats{display:flex;gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border-soft);}
+.trend-stat{flex:1;text-align:center;}
+.trend-stat .ts-val{font-size:17px;font-weight:700;font-variant-numeric:tabular-nums;}
+.trend-stat .ts-label{font-size:11px;color:var(--text-dim);margin-top:3px;}
+
+/* ===== Form ===== */
+.form-group{margin-bottom:15px;}
+.form-group label{display:block;font-size:12.5px;color:var(--text-dim);margin-bottom:6px;font-weight:500;}
+.form-input,.form-textarea{
+  width:100%;padding:12px 14px;background:var(--field-bg);border:1.5px solid var(--field-border);
+  border-radius:12px;color:var(--text);font-size:16px;min-height:44px;transition:border-color .15s,background .15s;
+}
+.form-input:focus,.form-textarea:focus{outline:none;border-color:var(--accent);background-color:var(--surface);}
+select.form-input{
+  appearance:none;-webkit-appearance:none;padding-right:38px;cursor:pointer;
+  background-image:linear-gradient(45deg,transparent 50%,var(--text-dim) 50%),linear-gradient(135deg,var(--text-dim) 50%,transparent 50%);
+  background-position:calc(100% - 18px) center,calc(100% - 13px) center;
+  background-size:5px 5px,5px 5px;background-repeat:no-repeat;
+}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--text-dim);}
+.form-textarea{resize:none;min-height:72px;line-height:1.5;}
+.form-row{display:flex;gap:10px;}
+.form-row .form-group{flex:1;min-width:0;}
+.ms-template-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+.ms-template-btn{
+  padding:9px 14px;background:var(--surface-2);border:none;border-radius:10px;color:var(--text-mid);
+  font-size:13px;cursor:pointer;transition:all .15s;font-weight:500;
+}
+.ms-template-btn:active{background:var(--accent-soft);color:var(--accent);}
+.ms-item{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.ms-item input[type="text"]{
+  flex:1;min-width:0;padding:10px 12px;background:var(--field-bg);border:1.5px solid var(--field-border);
+  border-radius:10px;color:var(--text);font-size:16px;min-height:42px;
+}
+.ms-item input[type="text"]:focus{outline:none;border-color:var(--accent);background:var(--surface);}
+.ms-item .remove-ms{background:none;border:none;color:var(--red);cursor:pointer;font-size:20px;padding:0 8px;min-width:34px;height:42px;}
+.checkbox-row{display:flex;align-items:center;gap:6px;cursor:pointer;white-space:nowrap;font-size:12px;color:var(--text-dim);}
+.checkbox-row input{width:18px;height:18px;cursor:pointer;accent-color:var(--accent);}
+
+/* ===== Sheets / Layers ===== */
+.layer{position:fixed;inset:0;z-index:1000;display:none;background:var(--scrim);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);}
+.layer.show{display:block;animation:fadeIn .22s ease;}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.sheet{
+  position:absolute;bottom:0;left:0;right:0;max-width:500px;margin:0 auto;
+  max-height:92dvh;display:flex;flex-direction:column;
+  background:var(--sheet-bg);border-radius:24px 24px 0 0;
+  box-shadow:0 -10px 44px rgba(0,0,0,.18);
+  transform:translateY(102%);transition:transform .34s cubic-bezier(.32,.72,0,1);
+  touch-action:pan-y;
+}
+.sheet.show{transform:translateY(0);}
+.sheet.dragging{transition:none;}
+.sheet-grab{padding:8px 20px 0;cursor:grab;touch-action:none;}
+.sheet-handle{width:36px;height:5px;background:var(--border);border-radius:3px;margin:0 auto 14px;}
+.sheet-title{font-size:20px;font-weight:700;margin:0 20px 16px;}
+.sheet-body{padding:0 20px;overflow-y:auto;-webkit-overflow-scrolling:touch;flex:1;overscroll-behavior:contain;}
+.sheet-footer{display:flex;gap:10px;padding:14px 20px calc(var(--safe-bottom) + 16px);}
+.sheet-footer .btn{flex:1;min-width:0;padding:0 12px;}
+.sheet-note{font-size:12px;color:var(--text-dim);line-height:1.7;}
+
+/* Action sheet */
+.action-sheet{padding:8px 12px calc(var(--safe-bottom) + 12px);}
+.action-title{padding:6px 12px 12px;font-size:13px;color:var(--text-dim);text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.action-item{
+  width:100%;display:flex;align-items:center;gap:12px;padding:15px 14px;border:none;background:transparent;
+  color:var(--text);font-size:16px;font-weight:500;border-radius:14px;cursor:pointer;text-align:left;
+}
+.action-item:active{background:var(--surface-2);}
+.action-item .ai{font-size:18px;width:24px;text-align:center;flex-shrink:0;}
+.action-item.danger{color:var(--red);}
+.action-cancel{
+  width:100%;margin-top:6px;padding:15px;border:none;border-radius:14px;background:var(--surface-2);
+  color:var(--text);font-size:16px;font-weight:600;cursor:pointer;
+}
+
+/* Dialog */
+.dialog-layer{display:none;align-items:center;justify-content:center;padding:24px;}
+.dialog-layer.show{display:flex;}
+.dialog{
+  width:100%;max-width:330px;background:var(--sheet-bg);border-radius:20px;padding:22px 20px 16px;
+  box-shadow:var(--shadow-lg);animation:pop .24s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+.dialog h3{font-size:17px;font-weight:700;text-align:center;margin-bottom:8px;}
+.dialog p{font-size:14px;color:var(--text-dim);text-align:center;line-height:1.6;margin-bottom:18px;word-break:break-word;}
+.dialog-actions{display:flex;gap:10px;}
+.dialog-actions .btn{flex:1;}
+
+/* Toast */
+.toast-layer{position:fixed;left:0;right:0;bottom:calc(var(--tab-h) + var(--safe-bottom) + 22px);z-index:2000;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;}
+.toast{
+  max-width:80%;padding:11px 18px;border-radius:14px;background:rgba(28,28,32,.92);color:#fff;
+  font-size:14px;font-weight:500;box-shadow:0 8px 28px rgba(0,0,0,.25);
+  animation:toastIn .28s cubic-bezier(.32,.72,0,1);display:flex;align-items:center;gap:8px;
+}
+.toast.out{animation:toastOut .25s ease forwards;}
+@keyframes toastIn{from{opacity:0;transform:translateY(14px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes toastOut{to{opacity:0;transform:translateY(10px) scale(.97)}}
+
+/* Empty state */
+.empty-state{text-align:center;padding:52px 20px;color:var(--text-dim);}
+.empty-state .icon{font-size:48px;margin-bottom:14px;opacity:.35;}
+.empty-state p{font-size:14.5px;}
+.empty-state .es-sub{font-size:12.5px;margin-top:6px;opacity:.8;}
+.empty-state .btn{margin-top:18px;}
+
+/* A2HS banner */
+.a2hs-banner{
+  display:flex;align-items:center;gap:10px;margin-top:14px;padding:13px 15px;
+  background:var(--accent-soft);border-radius:14px;cursor:pointer;
+}
+.a2hs-banner .ab-ico{font-size:20px;}
+.a2hs-banner .ab-txt{flex:1;font-size:13px;color:var(--accent);font-weight:600;line-height:1.45;}
+.a2hs-banner .ab-close{background:none;border:none;color:var(--text-dim);font-size:17px;padding:4px 6px;cursor:pointer;}
+
+/* Settings list */
+.s-list{background:var(--surface);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);margin-bottom:14px;}
+.s-item{display:flex;align-items:center;gap:12px;padding:15px 16px;background:transparent;border:none;width:100%;cursor:pointer;text-align:left;color:var(--text);font-size:15.5px;font-weight:500;}
+.s-item + .s-item{border-top:1px solid var(--border-soft);}
+.s-item:active{background:var(--surface-2);}
+.s-item .si-ico{font-size:18px;width:24px;text-align:center;flex-shrink:0;}
+.s-item .si-sub{display:block;font-size:12px;color:var(--text-dim);font-weight:400;margin-top:2px;}
+.s-item .si-arrow{margin-left:auto;color:var(--text-dim);font-size:14px;}
+.s-item.danger{color:var(--red);}
+
+/* Theme cards */
+.theme-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.theme-card{
+  position:relative;padding:14px;border-radius:16px;cursor:pointer;
+  background:var(--surface-2);border:2px solid transparent;transition:border-color .18s,transform .14s;
+}
+.theme-card:active{transform:scale(.97);}
+.theme-card.active{border-color:var(--accent);}
+.theme-card .tc-dots{display:flex;gap:5px;margin-bottom:10px;}
+.theme-card .tc-dot{width:20px;height:20px;border-radius:50%;border:1px solid rgba(0,0,0,.08);}
+.theme-card .tc-name{font-size:14.5px;font-weight:700;}
+.theme-card .tc-desc{font-size:11px;color:var(--text-dim);margin-top:3px;line-height:1.45;}
+.theme-card .tc-check{position:absolute;top:12px;right:12px;font-size:14px;color:var(--accent);font-weight:700;}
+
+/* A2HS guide */
+.guide-step{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--border-soft);}
+.guide-step:last-child{border-bottom:none;}
+.guide-num{
+  width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--on-accent);
+  font-size:12.5px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px;
+}
+.guide-txt{flex:1;font-size:14px;line-height:1.6;}
+.guide-txt b{color:var(--accent);}
+.tip-box{padding:13px 15px;background:var(--orange-soft);border-radius:12px;font-size:12.5px;color:var(--orange);line-height:1.65;margin-top:14px;}
+
+.kv{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border-soft);font-size:14px;}
+.kv:last-child{border-bottom:none;}
+.kv .k{color:var(--text-dim);}
+.kv .v{font-weight:600;font-variant-numeric:tabular-nums;}
+
+.money{font-variant-numeric:tabular-nums;font-weight:600;}
+.text-dim{color:var(--text-dim);}
+.divider{height:1px;background:var(--border);margin:18px 0;}
+.spacer{height:8px;}
+
+@media (min-width:641px){
+  #app{max-width:500px;margin:0 auto;box-shadow:0 0 40px rgba(0,0,0,.05);}
+  .fab{right:calc(50% - 250px + 20px);}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important;}
+}
+</style>
+<script>
+/* 首屏防闪白：在渲染前先把主题挂到 <html> 上 */
+try {
+  var _st = JSON.parse(localStorage.getItem('commission_tracker_v3') || '{}');
+  var _th = (_st.prefs && _st.prefs.theme) || 'light';
+  document.documentElement.setAttribute('data-theme', _th);
+  if (_th === 'night') { document.documentElement.style.colorScheme = 'dark'; }
+} catch (e) {}
+</script>
+</head>
+<body>
+<div id="app">
+  <header class="top-bar" id="topBar">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
+      <div style="min-width:0;">
+        <h1 id="pageTitle">约稿<span class="accent">尾款</span>管家</h1>
+        <div class="subtitle" id="pageSubtitle">管理你的约稿排期与尾款</div>
+      </div>
+      <div class="tb-actions">
+        <button class="icon-btn" data-act="open-theme" aria-label="配色主题">🎨</button>
+        <button class="icon-btn" data-act="open-settings" aria-label="设置">⚙️</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="content" id="content">
+    <section id="view-dashboard" class="view active">
+      <div id="a2hsSlot"></div>
+      <div class="stat-grid" id="statsGrid"></div>
+      <div class="section">
+        <div class="section-header">
+          <h2>📅 各月尾款</h2>
+          <button class="btn btn-primary btn-sm" data-act="add">+ 新增</button>
+        </div>
+        <div id="monthList"></div>
+      </div>
+    </section>
+
+    <section id="view-list" class="view">
+      <div class="search-wrap">
+        <span class="s-ico">🔍</span>
+        <input class="search-input" id="searchInput" placeholder="搜索稿件 / 画师" enterkeyhint="search">
+      </div>
+      <div class="filter-chips" id="filterChips"></div>
+      <div id="listContainer" style="margin-top:8px;"></div>
+    </section>
+
+    <section id="view-schedule" class="view">
+      <div class="schedule-nav">
+        <button class="nav-arrow" data-act="prev-month" aria-label="上个月">‹</button>
+        <button class="schedule-month" id="scheduleTitle" data-act="this-month"></button>
+        <button class="nav-arrow" data-act="next-month" aria-label="下个月">›</button>
+      </div>
+      <div id="scheduleGrid"></div>
+    </section>
+
+    <section id="view-calculator" class="view">
+      <div class="calc-card">
+        <div class="calc-intro">
+          已知稿件总价 <b>n</b>（含 5% 平台手续费）和画师平台留档价 <b>P</b>，计算需<b style="color:var(--accent)">线下转账</b>金额。<br>
+          <span style="font-size:12px">公式：线下转账 =（n − P）× 95%</span>
+        </div>
+        <div class="form-group">
+          <label>稿件总价 n — 含手续费 (¥)</label>
+          <input class="form-input" type="number" inputmode="decimal" id="calcTotal" placeholder="如 5000">
+        </div>
+        <div class="form-group">
+          <label>画师平台留档价 P (¥)</label>
+          <input class="form-input" type="number" inputmode="decimal" id="calcPlatform" placeholder="如 50">
+        </div>
+        <div class="calc-result">
+          <div class="label">线下转账金额</div>
+          <div class="amount" id="calcAmount">¥ 0</div>
+        </div>
+        <div class="calc-breakdown" id="calcBreakdown"></div>
+      </div>
+      <div class="section">
+        <div class="section-header"><h2>📌 快捷选取</h2></div>
+        <div id="calcQuickPick"></div>
+      </div>
+    </section>
+
+    <section id="view-lab" class="view">
+      <div class="seg-control" id="segControl">
+        <button class="seg-btn active" data-act="lab" data-lab="pressure">😰 尾款压力</button>
+        <button class="seg-btn" data-act="lab" data-lab="guarantee">🎫 保送卡</button>
+        <button class="seg-btn" data-act="lab" data-lab="wishes">🥞 我画的饼</button>
+        <button class="seg-btn" data-act="lab" data-lab="trend">📈 约稿趋势</button>
+      </div>
+
+      <div class="lab-sub active" id="lab-pressure">
+        <div class="pressure-card">
+          <div class="calc-intro">
+            输入本月预计收入和固定支出，结合<b>待付尾款</b>，看看资金压力如何。<br>
+            <span style="font-size:12px;color:var(--accent)">本月尾款已自动填入</span>
+          </div>
+          <div class="form-group">
+            <label>预计工资 (¥)</label>
+            <input class="form-input" type="number" inputmode="decimal" id="pr_salary" placeholder="如 8000">
+          </div>
+          <div class="form-group">
+            <label>预计其他收入 (¥) <span style="font-size:11px">（稿费/副业/理财等）</span></label>
+            <input class="form-input" type="number" inputmode="decimal" id="pr_other_income" placeholder="如 2000">
+          </div>
+          <div class="form-group">
+            <label>网贷月还 (¥)</label>
+            <input class="form-input" type="number" inputmode="decimal" id="pr_loan" placeholder="如 3000">
+          </div>
+          <div class="form-group">
+            <label>其他固定支出 (¥) <span style="font-size:11px">（房租/卡/保险等）</span></label>
+            <input class="form-input" type="number" inputmode="decimal" id="pr_other_expense" placeholder="如 1500">
+          </div>
+          <div class="form-group">
+            <label>本月尾款 (¥)</label>
+            <div style="display:flex;align-items:center;gap:8px;">
+              <input class="form-input" type="number" inputmode="decimal" id="pr_tail" placeholder="0">
+              <span class="auto-fill" id="prAutoFill">自动</span>
+            </div>
+          </div>
+          <div id="pressureResult" style="display:none;"></div>
+          <div class="pressure-breakdown" id="pressureBreakdown" style="display:none;"></div>
+        </div>
+      </div>
+
+      <div class="lab-sub" id="lab-guarantee">
+        <div style="margin-top:16px;">
+          <div class="calc-intro" style="margin-bottom:12px;">画师承诺「下次接」但不知道下次是什么时候。记下来，等画师开稿时拿出来用。</div>
+          <div id="guaranteeList"></div>
+          <button class="btn btn-ghost btn-block" style="margin-top:12px;" data-act="add-guarantee">+ 新增保送卡</button>
+        </div>
+      </div>
+
+      <div class="lab-sub" id="lab-wishes">
+        <div style="margin-top:16px;">
+          <div class="calc-intro" style="margin-bottom:12px;">想约的东西，画个饼记下来。预估价格，排优先级。</div>
+          <div id="wishesList"></div>
+          <button class="btn btn-ghost btn-block" style="margin-top:12px;" data-act="add-wish">+ 画个新饼</button>
+        </div>
+      </div>
+
+      <div class="lab-sub" id="lab-trend">
+        <div style="margin-top:16px;" id="trendChart"></div>
+      </div>
+    </section>
+  </main>
+
+  <button class="fab" id="fab" data-act="add" aria-label="新增稿件">+</button>
+
+  <nav class="tab-bar" id="tabBar">
+    <button class="tab-btn" data-act="nav" data-view="dashboard"><span class="tab-icon">📊</span><span>总览</span></button>
+    <button class="tab-btn" data-act="nav" data-view="list"><span class="tab-icon">🎨</span><span>稿件</span></button>
+    <button class="tab-btn" data-act="nav" data-view="schedule"><span class="tab-icon">📅</span><span>排期</span></button>
+    <button class="tab-btn" data-act="nav" data-view="calculator"><span class="tab-icon">💸</span><span>计算器</span></button>
+    <button class="tab-btn" data-act="nav" data-view="lab"><span class="tab-icon">🧪</span><span>实验室</span></button>
+  </nav>
+</div>
+
+<div class="layer" id="sheetLayer"><div class="sheet" id="sheet"></div></div>
+<div class="layer" id="actionLayer"><div class="sheet action-sheet" id="actionSheet"></div></div>
+<div class="layer dialog-layer" id="dialogLayer"><div class="dialog" id="dialog"></div></div>
+<div class="toast-layer" id="toastLayer"></div>
+
+<script>
+/* =========================================================================
+   1. 基础工具
+   ========================================================================= */
+const $  = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const num = n => (Number(n) || 0).toLocaleString('zh-CN', { maximumFractionDigits: 2 });
+const fmt = n => '¥' + num(n);
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+let _userActivated = false;
+['touchstart', 'pointerdown', 'click', 'keydown'].forEach(ev =>
+  document.addEventListener(ev, () => { _userActivated = true; }, { once: true, passive: true }));
+const haptic = (ms = 8) => {
+  if (!_userActivated) return;                       // 没交互过就调 vibrate，Chrome 会往控制台报错
+  try { navigator.vibrate && navigator.vibrate(ms); } catch (e) {}
+};
+
+function monthKey(d) { return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); }
+function thisMonthKey() { return monthKey(new Date()); }
+function monthLabel(d) { return d.getFullYear() + '年' + (d.getMonth() + 1) + '月'; }
+function fmtDate(s) {
+  if (!s) return '';
+  const p = String(s).split('-');
+  if (p.length < 3) return s;
+  return parseInt(p[1]) + '月' + parseInt(p[2]) + '日';
+}
+function fmtMonth(m) {
+  if (!m) return '未定';
+  const p = String(m).split('-');
+  const y = parseInt(p[0]), mo = parseInt(p[1]);
+  return mo + '月' + (y === new Date().getFullYear() ? '' : ' ' + y);
+}
+
+/* =========================================================================
+   2. 数据层
+   ========================================================================= */
+const STORE_KEY = 'commission_tracker_v3';
+const LEGACY_KEY = 'commission_tracker_v2';
+const freshState = () => ({ version: 3, commissions: [], guarantees: [], wishes: [], prefs: { theme: 'light', view: 'dashboard', a2hsDismissed: 0 } });
+let MIGRATED = 0;   // 从旧版导入的条数（用于首屏提示）
+
+/* ---- 旧版数据归一化：字段名与 V12 完全一致，这里只做防御性清洗 ---- */
+function normalizeComm(c) {
+  if (!c || typeof c !== 'object') return null;
+  const title = String(c.title || '').trim();
+  if (!title) return null;
+  return {
+    id: c.id || uid(),
+    title,
+    artist: String(c.artist || ''),
+    total: Number(c.total) || 0,
+    paid: Number(c.paid) || 0,
+    month: typeof c.month === 'string' ? c.month : '',
+    date: typeof c.date === 'string' ? c.date : '',
+    notes: String(c.notes || ''),
+    milestones: Array.isArray(c.milestones)
+      ? c.milestones.filter(m => m && (m.name || m.done)).map(m => ({ name: String(m.name || '节点'), done: !!m.done }))
+      : []
+  };
+}
+function normalizeGuarantee(g) {
+  if (!g || typeof g !== 'object') return null;
+  const artist = String(g.artist || '').trim();
+  if (!artist) return null;
+  return { id: g.id || ('g_' + uid()), artist, price: Number(g.price) || 0, note: String(g.note || ''), done: !!g.done };
+}
+function normalizeWish(w) {
+  if (!w || typeof w !== 'object') return null;
+  const title = String(w.title || '').trim();
+  if (!title) return null;
+  return { id: w.id || ('w_' + uid()), title, artist: String(w.artist || ''), estPrice: Number(w.estPrice) || 0, note: String(w.note || ''), done: !!w.done };
+}
+const readJSON = k => { try { const v = JSON.parse(localStorage.getItem(k) || 'null'); return v; } catch (e) { return null; } };
+
+function loadState() {
+  const s = freshState();
+  /* ① 已有新版数据 → 直接用 */
+  try {
+    const raw = localStorage.getItem(STORE_KEY);
+    if (raw) {
+      const d = JSON.parse(raw);
+      s.commissions = Array.isArray(d.commissions) ? d.commissions : [];
+      s.guarantees = Array.isArray(d.guarantees) ? d.guarantees : [];
+      s.wishes = Array.isArray(d.wishes) ? d.wishes : [];
+      s.prefs = Object.assign(s.prefs, d.prefs || {});
+      return s;
+    }
+  } catch (e) { /* 新版数据损坏 → 尝试从旧版恢复 */ }
+
+  /* ② 首次升级：从 V12 的三个键一次性搬过来（只读，不删旧数据，方便回滚） */
+  const oldComms = readJSON(LEGACY_KEY);
+  const oldG = readJSON('guarantee_cards');
+  const oldW = readJSON('wishes');
+  const hasLegacy = Array.isArray(oldComms) || Array.isArray(oldG) || Array.isArray(oldW);
+  if (hasLegacy) {
+    if (Array.isArray(oldComms)) s.commissions = oldComms.map(normalizeComm).filter(Boolean);
+    if (Array.isArray(oldG)) s.guarantees = oldG.map(normalizeGuarantee).filter(Boolean);
+    if (Array.isArray(oldW)) s.wishes = oldW.map(normalizeWish).filter(Boolean);
+    try {
+      const t = localStorage.getItem('app_theme');
+      if (t === 'boqiao') s.prefs.theme = 'mintchoco';
+      else if (t === 'default') s.prefs.theme = 'light';
+    } catch (e) {}
+    MIGRATED = s.commissions.length + s.guarantees.length + s.wishes.length;
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(s)); } catch (e) {}   // 立刻落盘，别等 120ms 的防抖
+  }
+  return s;
+}
+let S = loadState();
+let saveTimer = null;
+function save(now) {
+  const run = () => { try { localStorage.setItem(STORE_KEY, JSON.stringify(S)); } catch (e) { toast('⚠️ 保存失败，存储空间可能已满'); } };
+  if (now) { run(); return; }
+  clearTimeout(saveTimer); saveTimer = setTimeout(run, 120);
+}
+const findComm = id => S.commissions.find(c => c.id === id);
+const remainingOf = c => Math.max(0, (Number(c.total) || 0) - (Number(c.paid) || 0));
+const statusOf = c => remainingOf(c) <= 0 ? 'done' : 'pending';
+
+/* =========================================================================
+   3. 主题
+   ========================================================================= */
+const THEMES = [
+  { id: 'light',     name: '极简白',   desc: '干净利落',           dots: ['#ffffff', '#5856d6', '#1d1d1f'], color: '#f2f2f7' },
+  { id: 'mintchoco', name: '薄巧',     desc: '薄荷 × 巧克力',       dots: ['#e6f4ec', '#2a8f6f', '#3a2b23'], color: '#eaf3ee' },
+  { id: 'sea',       name: '海盐',     desc: '清爽蓝调',           dots: ['#e8f2fa', '#2b76c9', '#1b2733'], color: '#eef5fa' },
+  { id: 'peach',     name: '蜜桃乌龙', desc: '温柔暖橘',           dots: ['#fdeee6', '#c9613c', '#3a2a22'], color: '#fdf1ea' },
+  { id: 'matcha',    name: '抹茶拿铁', desc: '低饱和绿',           dots: ['#eef1e2', '#5f8437', '#2f3524'], color: '#f0f3e6' },
+  { id: 'lavender',  name: '薰衣草',   desc: '梦幻紫',             dots: ['#efeafa', '#6a55c9', '#2b2540'], color: '#f1ecfb' },
+  { id: 'sakura',    name: '樱花',     desc: '软糯粉',             dots: ['#fce8ee', '#c94a76', '#3a2630'], color: '#fceef2' },
+  { id: 'night',     name: '深夜',     desc: '护眼深色模式',       dots: ['#1b1d28', '#7aa2f7', '#e6e8f2'], color: '#13141c', dark: true }
+];
+
+function applyTheme(id) {
+  const t = THEMES.find(x => x.id === id) || THEMES[0];
+  document.documentElement.setAttribute('data-theme', t.id);
+  document.documentElement.style.colorScheme = t.dark ? 'dark' : 'light';
+  const meta = $('meta[name="theme-color"]');
+  if (meta) meta.setAttribute('content', t.color);
+  S.prefs.theme = t.id; save();
+  buildIcon();
+}
+
+/* 动态生成 App 图标（跟随主题配色） */
+function buildIcon() {
+  try {
+    const cs = getComputedStyle(document.documentElement);
+    const a = cs.getPropertyValue('--accent').trim() || '#5856d6';
+    const b = cs.getPropertyValue('--accent-light').trim() || '#7a78e8';
+    const size = 180;
+    const cv = document.createElement('canvas');
+    cv.width = cv.height = size;
+    const g = cv.getContext('2d');
+    const grad = g.createLinearGradient(0, 0, size, size);
+    grad.addColorStop(0, b); grad.addColorStop(1, a);
+    const r = size * 0.22;
+    g.beginPath();
+    g.moveTo(r, 0); g.lineTo(size - r, 0); g.quadraticCurveTo(size, 0, size, r);
+    g.lineTo(size, size - r); g.quadraticCurveTo(size, size, size - r, size);
+    g.lineTo(r, size); g.quadraticCurveTo(0, size, 0, size - r);
+    g.lineTo(0, r); g.quadraticCurveTo(0, 0, r, 0);
+    g.closePath(); g.fillStyle = grad; g.fill();
+    g.fillStyle = '#ffffff';
+    g.font = 'bold ' + Math.round(size * 0.52) + 'px "PingFang SC","Microsoft YaHei",sans-serif';
+    g.textAlign = 'center'; g.textBaseline = 'middle';
+    g.fillText('约', size / 2, size * 0.54);
+    const url = cv.toDataURL('image/png');
+    let link = $('link[rel="apple-touch-icon"]');
+    if (!link) { link = document.createElement('link'); link.rel = 'apple-touch-icon'; document.head.appendChild(link); }
+    link.href = url;
+    let fav = $('link[rel="icon"]');
+    if (!fav) { fav = document.createElement('link'); fav.rel = 'icon'; fav.type = 'image/png'; document.head.appendChild(fav); }
+    fav.href = url;
+  } catch (e) {}
+}
+
+function openThemeSheet() {
+  const body = `
+    <div class="theme-grid">
+      ${THEMES.map(t => `
+        <div class="theme-card ${S.prefs.theme === t.id ? 'active' : ''}" data-act="set-theme" data-id="${t.id}">
+          ${S.prefs.theme === t.id ? '<span class="tc-check">✓</span>' : ''}
+          <div class="tc-dots">${t.dots.map(d => `<span class="tc-dot" style="background:${d}"></span>`).join('')}</div>
+          <div class="tc-name">${t.name}</div>
+          <div class="tc-desc">${t.desc}</div>
+        </div>`).join('')}
+    </div>
+    <div class="spacer"></div>
+    <div class="sheet-note">配色即时生效，会自动记住你的选择。深色模式适合夜里记账 🌙</div>`;
+  Sheet.open({ title: '🎨 配色主题', body, footer: `<button class="btn btn-primary btn-block" data-act="close-sheet">完成</button>` });
+}
+
+/* =========================================================================
+   4. UI 组件：Toast / Dialog / ActionSheet / Sheet
+   ========================================================================= */
+let toastTimer = null;
+function toast(msg, icon) {
+  const layer = $('#toastLayer');
+  const el = document.createElement('div');
+  el.className = 'toast';
+  el.innerHTML = (icon ? `<span>${icon}</span>` : '') + `<span>${esc(msg)}</span>`;
+  layer.appendChild(el);
+  haptic(6);
+  setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 260); }, 1900);
+}
+
+function confirmDialog({ title = '确认', message = '', okText = '确定', cancelText = '取消', danger = false }) {
+  return new Promise(resolve => {
+    const layer = $('#dialogLayer'), box = $('#dialog');
+    box.innerHTML = `
+      <h3>${esc(title)}</h3>
+      <p>${esc(message)}</p>
+      <div class="dialog-actions">
+        <button class="btn btn-ghost" data-dlg="0">${esc(cancelText)}</button>
+        <button class="btn ${danger ? 'btn-danger' : 'btn-primary'}" data-dlg="1">${esc(okText)}</button>
+      </div>`;
+    layer.classList.add('show');
+    const done = v => {
+      layer.classList.remove('show');
+      box.innerHTML = '';
+      layer.removeEventListener('click', onClick);
+      resolve(v);
+    };
+    const onClick = e => {
+      if (e.target === layer) return done(false);
+      const b = e.target.closest('[data-dlg]');
+      if (b) { haptic(8); done(b.dataset.dlg === '1'); }
+    };
+    layer.addEventListener('click', onClick);
+  });
+}
+
+function actionSheet({ title = '', items = [] }) {
+  const layer = $('#actionLayer'), box = $('#actionSheet');
+  if (layer._onClick) layer.removeEventListener('click', layer._onClick);
+  box.innerHTML = `
+    ${title ? `<div class="action-title">${esc(title)}</div>` : ''}
+    ${items.map((it, i) => `<button class="action-item ${it.danger ? 'danger' : ''}" data-i="${i}"><span class="ai">${it.icon || ''}</span><span>${esc(it.label)}</span></button>`).join('')}
+    <button class="action-cancel" data-i="-1">取消</button>`;
+  layer.classList.add('show');
+  requestAnimationFrame(() => box.classList.add('show'));
+  const close = () => {
+    box.classList.remove('show');
+    setTimeout(() => {
+      layer.classList.remove('show');
+      box.innerHTML = '';
+      if (layer._onClick) { layer.removeEventListener('click', layer._onClick); layer._onClick = null; }
+    }, 280);
+  };
+  const onClick = e => {
+    if (e.target === layer) return close();
+    const b = e.target.closest('[data-i]');
+    if (!b) return;
+    const i = parseInt(b.dataset.i);
+    close();
+    if (i >= 0 && items[i]) { haptic(10); setTimeout(items[i].act, 180); }
+  };
+  layer._onClick = onClick;
+  layer.addEventListener('click', onClick);
+}
+
+const Sheet = (() => {
+  const layer = $('#sheetLayer'), el = $('#sheet');
+  let dragY = 0, startY = 0, dragging = false;
+  let seq = 0;
+
+  function open({ title = '', body = '', footer = '', onMount }) {
+    seq++;
+    el.innerHTML = `
+      <div class="sheet-grab"><div class="sheet-handle"></div></div>
+      ${title ? `<h2 class="sheet-title">${title}</h2>` : ''}
+      <div class="sheet-body">${body}</div>
+      ${footer ? `<div class="sheet-footer">${footer}</div>` : ''}`;
+    layer.classList.add('show');
+    requestAnimationFrame(() => el.classList.add('show'));
+    el.querySelector('.sheet-body').scrollTop = 0;
+    if (onMount) onMount(el);
+  }
+  function close() {
+    const my = seq;
+    el.classList.remove('show');
+    setTimeout(() => {
+      if (seq !== my) return;          // 期间又打开了新弹窗，别误关
+      layer.classList.remove('show');
+      el.innerHTML = '';
+    }, 320);
+  }
+  function onStart(e) {
+    if (layer._locked) return;
+    dragging = true; startY = e.touches[0].clientY; dragY = 0;
+    el.classList.add('dragging');
+  }
+  function onMove(e) {
+    if (!dragging) return;
+    dragY = Math.max(0, e.touches[0].clientY - startY);
+    el.style.transform = `translateY(${dragY}px)`;
+  }
+  function onEnd() {
+    if (!dragging) return;
+    dragging = false;
+    el.classList.remove('dragging');
+    el.style.transform = '';
+    if (dragY > 110) close();
+  }
+  layer.addEventListener('click', e => { if (e.target === layer) close(); });
+  el.addEventListener('touchstart', e => { if (e.target.closest('.sheet-grab')) onStart(e); }, { passive: true });
+  el.addEventListener('touchmove', onMove, { passive: true });
+  el.addEventListener('touchend', onEnd);
+  return { open, close, el };
+})();
+
+function closeAllLayers() { Sheet.close(); }
+
+/* =========================================================================
+   5. 导航
+   ========================================================================= */
+const TITLES = {
+  dashboard: ['约稿<span class="accent">尾款</span>管家', '管理你的约稿排期与尾款'],
+  list: ['稿件列表', '全部约稿记录'],
+  schedule: ['月度排期', '按月查看交付计划'],
+  calculator: ['线下计算器', '平台手续费与线下转账计算'],
+  lab: ['实验<span class="accent">室</span>', '实验性功能与工具']
+};
+const VIEWS = Object.keys(TITLES);
+
+function go(view) {
+  if (!VIEWS.includes(view)) view = 'dashboard';
+  S.prefs.view = view; save();
+  $$('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+  $$('.view').forEach(v => v.classList.toggle('active', v.id === 'view-' + view));
+  $('#pageTitle').innerHTML = TITLES[view][0];
+  $('#pageSubtitle').textContent = TITLES[view][1];
+  window.scrollTo({ top: 0 });
+  $('#fab').classList.toggle('hide', view === 'calculator');
+  render(view);
+}
+
+function render(view) {
+  view = view || S.prefs.view || 'dashboard';
+  if (view === 'dashboard') renderDashboard();
+  else if (view === 'list') renderList();
+  else if (view === 'schedule') renderSchedule();
+  else if (view === 'calculator') renderCalculator();
+  else if (view === 'lab') renderLab();
+}
+function renderAll() { render(); }
+
+/* =========================================================================
+   6. 卡片
+   ========================================================================= */
+function commCardHTML(c) {
+  const rem = remainingOf(c), done = statusOf(c) === 'done';
+  return `<div class="comm-card" data-act="edit" data-id="${c.id}" data-longpress data-lp="${c.id}">
+    <div class="cc-top">
+      <div style="min-width:0;flex:1;">
+        <div class="cc-title">${esc(c.title)}</div>
+        <div class="cc-artist">${esc(c.artist || '未填画师')}${c.date ? ' · ' + fmtDate(c.date) : ''}</div>
+      </div>
+      <div class="cc-money">
+        <div class="cc-rem ${done ? 'done' : 'pending'}">${fmt(rem)}</div>
+        <div class="cc-sub">${done ? '已结清' : '待付'} / 共 ${fmt(c.total)}</div>
+      </div>
+    </div>
+    ${progressHTML(c)}
+    <div class="cc-foot">
+      <span class="tag ${done ? 'tag-done' : 'tag-pending'}">${done ? '✓ 已结清' : '待付尾款'}</span>
+      <button class="cc-more" data-act="card-menu" data-id="${c.id}" aria-label="更多操作">⋯</button>
+    </div>
+  </div>`;
+}
+
+function progressHTML(c) {
+  if (!c.milestones || !c.milestones.length) return '<div class="progress-labels">未设置验收节点</div>';
+  let html = '<div class="progress-row">';
+  c.milestones.forEach((m, i) => {
+    if (i > 0) html += `<div class="pline ${m.done ? 'done' : ''}"></div>`;
+    html += `<button class="pdot ${m.done ? 'done' : ''}" data-act="ms" data-id="${c.id}" data-idx="${i}" aria-label="切换节点"></button>`;
+  });
+  html += '</div>';
+  html += '<div class="progress-labels">' + c.milestones.map((m, i) => (i > 0 ? ' → ' : '') + (m.done ? '✓ ' : '') + esc(m.name || '节点')).join('') + '</div>';
+  return html;
+}
+
+/* =========================================================================
+   7. 总览
+   ========================================================================= */
+let expandedMonths = new Set();
+
+function renderDashboard() {
+  renderA2HSBanner();
+  const mk = thisMonthKey();
+  const pend = S.commissions.filter(c => remainingOf(c) > 0);
+  const pendAmt = pend.reduce((s, c) => s + remainingOf(c), 0);
+  const mPend = pend.filter(c => c.month === mk);
+  const mPendAmt = mPend.reduce((s, c) => s + remainingOf(c), 0);
+  const paidAll = S.commissions.reduce((s, c) => s + (Number(c.paid) || 0), 0);
+  const totalAll = S.commissions.reduce((s, c) => s + (Number(c.total) || 0), 0);
+  const artists = new Set(S.commissions.map(c => c.artist).filter(Boolean)).size;
+
+  const stats = [
+    { cls: 'orange', vcls: 'v-orange', label: '本月待付尾款', val: fmt(mPendAmt), sub: `${mPend.length} 张待付` },
+    { cls: '', vcls: '', label: '全部待付尾款', val: fmt(pendAmt), sub: `${pend.length} 张未结清` },
+    { cls: 'green', vcls: 'v-green', label: '累计已付', val: fmt(paidAll), sub: `共 ${fmt(totalAll)}` },
+    { cls: '', vcls: '', label: '稿件总数', val: S.commissions.length + ' 张', sub: `${artists} 位画师` }
+  ];
+  $('#statsGrid').innerHTML = stats.map(s => `
+    <div class="stat-card ${s.cls}">
+      <div class="stat-label">${s.label}</div>
+      <div class="stat-value ${s.vcls}">${s.val}</div>
+      <div class="stat-sub">${s.sub}</div>
+    </div>`).join('');
+
+  const box = $('#monthList');
+  if (!S.commissions.length) {
+    box.innerHTML = emptyState('📭', '还没有约稿记录', '点击右下角 + 添加第一张稿件', 'add', '+ 新增稿件');
+    return;
+  }
+  const months = Array.from(new Set(S.commissions.map(c => c.month || ''))).sort().reverse();
+  box.innerHTML = months.map(m => {
+    const items = S.commissions.filter(c => (c.month || '') === m)
+      .sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999'));
+    const mp = items.filter(c => remainingOf(c) > 0);
+    const mpAmt = mp.reduce((s, c) => s + remainingOf(c), 0);
+    const isCur = m === mk;
+    const open = expandedMonths.has(m) || (isCur && !expandedMonths.has('!' + m));
+    return `<div class="month-section ${open ? 'expanded' : 'collapsed'}">
+      <div class="month-header" data-act="toggle-month" data-id="${m}">
+        <span class="m-name">${isCur ? '📍 ' : ''}${fmtMonth(m)}</span>
+        <span class="m-summary">${mp.length} 张待付 · ${fmt(mpAmt)}</span>
+        <span class="m-arrow">▸</span>
+      </div>
+      <div class="month-body" style="${open ? '' : 'display:none'}">
+        ${items.map(commCardHTML).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleMonth(m) {
+  if (expandedMonths.has(m)) expandedMonths.delete(m);
+  else expandedMonths.add(m);
+  const isCur = m === thisMonthKey();
+  if (isCur) { if (expandedMonths.has(m)) expandedMonths.delete('!' + m); else expandedMonths.add('!' + m); }
+  renderDashboard();
+}
+
+/* =========================================================================
+   8. 列表
+   ========================================================================= */
+let listFilter = 'all';
+
+function renderList() {
+  const months = Array.from(new Set(S.commissions.map(c => c.month).filter(Boolean))).sort().reverse();
+  $('#filterChips').innerHTML =
+    [['all', '全部'], ['pending', '待付尾款'], ['done', '已结清']].map(([k, l]) =>
+      `<button class="chip ${listFilter === k ? 'active' : ''}" data-act="filter" data-id="${k}">${l}</button>`).join('') +
+    months.map(m => `<button class="chip ${listFilter === m ? 'active' : ''}" data-act="filter" data-id="${m}">${fmtMonth(m)}</button>`).join('');
+
+  const q = ($('#searchInput').value || '').trim().toLowerCase();
+  let list = S.commissions.filter(c => {
+    const title = (c.title || '').toLowerCase(), artist = (c.artist || '').toLowerCase();
+    if (q && !(title.includes(q) || artist.includes(q))) return false;
+    if (listFilter === 'pending' && statusOf(c) !== 'pending') return false;
+    if (listFilter === 'done' && statusOf(c) !== 'done') return false;
+    if (listFilter !== 'all' && listFilter !== 'pending' && listFilter !== 'done' && c.month !== listFilter) return false;
+    return true;
+  }).sort((a, b) => (b.month || '').localeCompare(a.month || '') || (a.date || '9999').localeCompare(b.date || '9999'));
+
+  const box = $('#listContainer');
+  if (!list.length) {
+    box.innerHTML = S.commissions.length
+      ? emptyState('🔍', '没有匹配的稿件', '换个关键词或筛选条件试试')
+      : emptyState('🎨', '还没有稿件记录', '点右下角 + 添加', 'add', '+ 新增稿件');
+    return;
+  }
+  box.innerHTML = list.map(commCardHTML).join('');
+}
+
+function onSearch() {
+  clearTimeout(onSearch._t);
+  onSearch._t = setTimeout(renderList, 160);
+}
+
+/* =========================================================================
+   9. 排期
+   ========================================================================= */
+let currentMonth = new Date();
+
+function renderSchedule() {
+  const isCur = monthKey(currentMonth) === thisMonthKey();
+  $('#scheduleTitle').innerHTML = monthLabel(currentMonth) + (isCur ? '<span class="hint">本月</span>' : '<span class="hint">点此回到本月</span>');
+  const mk = monthKey(currentMonth);
+  const items = S.commissions.filter(c => c.month === mk)
+    .sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999'));
+  const grid = $('#scheduleGrid');
+  if (!items.length) {
+    grid.innerHTML = emptyState('📅', fmtMonth(mk) + ' 暂无排期', '切换到其它月份看看', 'prev-month', '‹ 上个月');
+    return;
+  }
+  const mp = items.filter(c => remainingOf(c) > 0);
+  const mpAmt = mp.reduce((s, c) => s + remainingOf(c), 0);
+  grid.innerHTML = `<div class="schedule-summary"><span>共 ${items.length} 张稿件</span><span>待付 ${fmt(mpAmt)}</span></div>` +
+    items.map(commCardHTML).join('');
+}
+
+/* =========================================================================
+   10. 计算器
+   ========================================================================= */
+const FEE = 0.05;
+function renderCalculator() {
+  const box = $('#calcQuickPick');
+  if (!S.commissions.length) {
+    box.innerHTML = '<p class="text-dim" style="font-size:13px;text-align:center;padding:12px;">暂无稿件，可直接手动输入</p>';
+    return;
+  }
+  box.innerHTML = S.commissions
+    .slice()
+    .sort((a, b) => (b.month || '').localeCompare(a.month || ''))
+    .map(c => `<button class="ms-template-btn" style="text-align:left;width:100%;min-height:44px;margin-bottom:8px;" data-act="quick-pick" data-id="${c.id}">
+      ${esc(c.title)} — 总价 ${fmt(c.total)}
+    </button>`).join('');
+}
+function niceRound(n) {
+  if (n <= 0) return 0;
+  const a = Math.round(n);
+  if (a >= 10000) return Math.ceil(a / 500) * 500;
+  if (a >= 1000) return Math.ceil(a / 100) * 100;
+  if (a >= 500) return Math.ceil(a / 50) * 50;
+  if (a >= 100) return Math.ceil(a / 10) * 10;
+  return Math.ceil(a / 5) * 5;
+}
+function calcOffline() {
+  const n = parseFloat($('#calcTotal').value) || 0;
+  const p = parseFloat($('#calcPlatform').value) || 0;
+  const offline = (n - p) * (1 - FEE);
+  const origFee = n * FEE, actualFee = p * FEE, savedFee = origFee - actualFee;
+  const recommended = niceRound(offline);
+
+  const el = $('#calcAmount');
+  el.textContent = fmt(offline);
+  el.className = 'amount ' + (offline > 0 ? 'red' : 'green');
+
+  const bd = $('#calcBreakdown');
+  if (n <= 0 && p <= 0) { bd.innerHTML = ''; return; }
+  bd.innerHTML = `
+    <div class="breakdown-row green-row">
+      <span class="b-label">💚 节省的手续费<br><span style="font-size:11px">原手续费 ${num(origFee)} − 平台手续费 ${num(actualFee)}</span></span>
+      <span class="b-value">${fmt(savedFee)}</span>
+    </div>
+    <div class="breakdown-row highlight">
+      <span class="b-label">✨ 推荐转账金额<br><span style="font-size:11px">凑整抹零</span></span>
+      <span class="b-value">${fmt(recommended)}</span>
+    </div>`;
+}
+
+/* =========================================================================
+   11. 实验室
+   ========================================================================= */
+let currentLab = 'pressure';
+
+function renderLab() {
+  if (currentLab === 'pressure') renderPressure();
+  else if (currentLab === 'guarantee') renderGuarantee();
+  else if (currentLab === 'wishes') renderWishes();
+  else if (currentLab === 'trend') renderTrend();
+}
+function switchLab(sub) {
+  currentLab = sub;
+  $$('.seg-btn').forEach(b => b.classList.toggle('active', b.dataset.lab === sub));
+  $$('.lab-sub').forEach(s => s.classList.toggle('active', s.id === 'lab-' + sub));
+  renderLab();
+}
+
+/* ---- 尾款压力 ---- */
+function renderPressure() {
+  const mk = thisMonthKey();
+  const auto = S.commissions.filter(c => c.month === mk && remainingOf(c) > 0)
+    .reduce((s, c) => s + remainingOf(c), 0);
+  const tail = $('#pr_tail');
+  if (!tail.dataset.touched) tail.value = auto || '';
+  $('#prAutoFill').textContent = '自动 ' + fmt(auto);
+  calcPressure();
+}
+function calcPressure() {
+  const v = id => parseFloat($('#' + id).value) || 0;
+  const salary = v('pr_salary'), otherIncome = v('pr_other_income');
+  const loan = v('pr_loan'), otherExpense = v('pr_other_expense'), tail = v('pr_tail');
+  const totalIncome = salary + otherIncome;
+  const balance = totalIncome - loan - otherExpense - tail;
+
+  const resultEl = $('#pressureResult'), bdEl = $('#pressureBreakdown');
+  if (!(salary || otherIncome || loan || otherExpense || tail)) {
+    resultEl.style.display = 'none'; bdEl.style.display = 'none'; return;
+  }
+
+  let cls, emoji, verdict, detail;
+  if (balance > 0) {
+    if (balance > totalIncome * 0.3) { cls = 'safe'; emoji = '😊'; verdict = '压力不大'; detail = `本月可结余 ${fmt(balance)}，资金充裕`; }
+    else { cls = 'safe'; emoji = '🙂'; verdict = '刚好覆盖'; detail = `结余 ${fmt(balance)}，注意控制额外支出`; }
+  } else if (balance === 0) {
+    cls = 'warn'; emoji = '😐'; verdict = '刚好持平'; detail = '收支平衡，没有结余空间';
+  } else {
+    const gap = Math.abs(balance);
+    const ratio = totalIncome > 0 ? gap / totalIncome : 1;
+    if (ratio < 0.15) { cls = 'warn'; emoji = '😬'; verdict = '略有压力'; detail = `缺口 ${fmt(gap)}，需压缩支出或补收入`; }
+    else { cls = 'danger'; emoji = '😰'; verdict = '资金缺口'; detail = `缺口 ${fmt(gap)}，尾款支付有压力`; }
+  }
+
+  resultEl.style.display = 'block';
+  resultEl.className = 'pressure-result ' + cls;
+  resultEl.innerHTML = `<div class="emoji">${emoji}</div><div class="verdict">${verdict}</div><div class="detail">${detail}</div>`;
+
+  bdEl.style.display = 'flex';
+  bdEl.innerHTML = `
+    <div class="pb-row income"><span class="pb-label">💵 预计工资</span><span class="pb-value">+${fmt(salary)}</span></div>
+    <div class="pb-row income"><span class="pb-label">💼 其他收入</span><span class="pb-value">+${fmt(otherIncome)}</span></div>
+    <div class="pb-divider"></div>
+    <div class="pb-row expense"><span class="pb-label">💳 网贷月还</span><span class="pb-value">-${fmt(loan)}</span></div>
+    <div class="pb-row expense"><span class="pb-label">🏠 其他固定支出</span><span class="pb-value">-${fmt(otherExpense)}</span></div>
+    <div class="pb-row expense"><span class="pb-label">🎨 本月尾款</span><span class="pb-value">-${fmt(tail)}</span></div>
+    <div class="pb-divider"></div>
+    <div class="pb-row ${balance >= 0 ? 'income' : 'expense'}" style="background:${balance >= 0 ? 'var(--green-soft)' : 'var(--red-soft)'}">
+      <span class="pb-label" style="font-weight:600;color:var(--text)">${balance >= 0 ? '✅ 可用余额' : '⚠️ 资金缺口'}</span>
+      <span class="pb-value" style="font-size:18px">${balance >= 0 ? '+' : '-'}${fmt(Math.abs(balance))}</span>
+    </div>`;
+}
+
+/* ---- 保送卡 / 我画的饼 ---- */
+function renderGuarantee() {
+  const box = $('#guaranteeList');
+  if (!S.guarantees.length) { box.innerHTML = emptyState('🎫', '暂无保送卡', '记下画师答应你的下一次', 'add-guarantee', '+ 新增保送卡'); return; }
+  box.innerHTML = S.guarantees.map(g => `
+    <div class="gcard ${g.done ? 'done' : ''}" data-act="edit-guarantee" data-id="${g.id}">
+      <div class="gcard-top">
+        <div style="min-width:0;">
+          <div class="gcard-title">${esc(g.artist)}</div>
+          <div class="gcard-meta">${g.price ? fmt(g.price) + ' · ' : ''}${g.done ? '已兑现' : '等待中'}</div>
+        </div>
+        <span class="tag ${g.done ? 'tag-done' : 'tag-pending'}">${g.done ? '已兑现' : '待用'}</span>
+      </div>
+      ${g.note ? `<div class="gcard-note">${esc(g.note)}</div>` : ''}
+      <div class="gcard-actions">
+        <button data-act="toggle-guarantee" data-id="${g.id}">${g.done ? '↩ 恢复' : '✓ 兑现'}</button>
+        <button class="del-btn" data-act="del-guarantee" data-id="${g.id}">删除</button>
+      </div>
+    </div>`).join('');
+}
+function renderWishes() {
+  const box = $('#wishesList');
+  if (!S.wishes.length) { box.innerHTML = emptyState('🥞', '还没画饼', '想约的东西先记下来', 'add-wish', '+ 画个新饼'); return; }
+  const sorted = S.wishes.slice().sort((a, b) => (a.done ? 1 : 0) - (b.done ? 1 : 0));
+  box.innerHTML = sorted.map(w => `
+    <div class="gcard ${w.done ? 'done' : ''}" data-act="edit-wish" data-id="${w.id}">
+      <div class="gcard-top">
+        <div style="min-width:0;">
+          <div class="gcard-title">${esc(w.title)}</div>
+          <div class="gcard-meta">${w.artist ? '画师 ' + esc(w.artist) + ' · ' : ''}预估 ${fmt(w.estPrice || 0)}</div>
+        </div>
+        <span class="tag ${w.done ? 'tag-done' : 'tag-pending'}">${w.done ? '已约' : '想约'}</span>
+      </div>
+      ${w.note ? `<div class="gcard-note">${esc(w.note)}</div>` : ''}
+      <div class="gcard-actions">
+        <button data-act="toggle-wish" data-id="${w.id}">${w.done ? '↩ 恢复' : '✓ 已约'}</button>
+        <button class="del-btn" data-act="del-wish" data-id="${w.id}">删除</button>
+      </div>
+    </div>`).join('');
+}
+
+/* ---- 趋势 ---- */
+function renderTrend() {
+  const box = $('#trendChart');
+  if (!S.commissions.length) { box.innerHTML = emptyState('📈', '暂无数据', '添加稿件后这里会有统计'); return; }
+  const byMonth = {};
+  S.commissions.forEach(c => {
+    const m = c.month || '未知';
+    byMonth[m] = byMonth[m] || { count: 0, total: 0 };
+    byMonth[m].count++;
+    byMonth[m].total += Number(c.total) || 0;
+  });
+  const months = Object.keys(byMonth).sort();
+  const maxTotal = Math.max(...months.map(m => byMonth[m].total), 1);
+  const totalCount = S.commissions.length;
+  const totalAmt = S.commissions.reduce((s, c) => s + (Number(c.total) || 0), 0);
+  const avg = months.length ? totalAmt / months.length : 0;
+
+  box.innerHTML = `
+    <div class="trend-card">
+      <h3>📊 月度稿费趋势</h3>
+      <div class="trend-bars">
+        ${months.map(m => {
+          const d = byMonth[m], pct = Math.max(4, (d.total / maxTotal * 100));
+          return `<div class="trend-bar-row">
+            <span class="trend-bar-label">${fmtMonth(m)}</span>
+            <div class="trend-bar-track"><div class="trend-bar-fill" style="width:${pct}%">${num(d.total)}</div></div>
+            <span style="font-size:11px;color:var(--text-dim);width:32px;text-align:right;">${d.count}张</span>
+          </div>`;
+        }).join('')}
+      </div>
+      <div class="trend-stats">
+        <div class="trend-stat"><div class="ts-val">${totalCount}</div><div class="ts-label">总稿件数</div></div>
+        <div class="trend-stat"><div class="ts-val">${num(roundAmt(totalAmt))}</div><div class="ts-label">总稿费</div></div>
+        <div class="trend-stat"><div class="ts-val">${num(roundAmt(avg))}</div><div class="ts-label">月均稿费</div></div>
+      </div>
+    </div>`;
+}
+const roundAmt = n => Math.round(n);
+
+/* =========================================================================
+   12. 稿件表单（新增 / 编辑 / 删除）
+   ========================================================================= */
+let formMs = [];
+let formId = '';
+
+/* iOS Safari 不支持 input[type=month]，降级为下拉选择 */
+const MONTH_INPUT_OK = (() => { const i = document.createElement('input'); i.setAttribute('type', 'month'); return i.type === 'month'; })();
+function monthSelectHTML(current) {
+  const cur = current || thisMonthKey();
+  const now = new Date();
+  const opts = [];
+  for (let i = -18; i <= 18; i++) opts.push(monthKey(new Date(now.getFullYear(), now.getMonth() + i, 1)));
+  if (!opts.includes(cur)) opts.push(cur);
+  opts.sort();
+  return `<select class="form-input" id="f_month">${opts.map(m =>
+    `<option value="${m}" ${m === cur ? 'selected' : ''}>${fmtMonth(m)}${m === thisMonthKey() ? '（本月）' : ''}</option>`).join('')}</select>`;
+}
+function monthFieldHTML(current) {
+  if (MONTH_INPUT_OK) return `<input class="form-input" type="month" id="f_month" value="${esc(current || thisMonthKey())}">`;
+  return monthSelectHTML(current);
+}
+
+function openCommissionForm(id) {
+  const c = id ? findComm(id) : null;
+  formId = c ? c.id : '';
+  formMs = c ? (c.milestones || []).map(m => ({ ...m })) : [];
+  const body = `
+    <div class="form-group"><label>稿件名称 *</label>
+      <input class="form-input" id="f_title" placeholder="如：头像约稿" value="${esc(c ? c.title : '')}"></div>
+    <div class="form-group"><label>画师 / 创作者</label>
+      <input class="form-input" id="f_artist" placeholder="如：画师A" value="${esc(c ? c.artist : '')}"></div>
+    <div class="form-row">
+      <div class="form-group"><label>总价 (¥) *</label>
+        <input class="form-input" type="number" inputmode="decimal" id="f_total" placeholder="5000" value="${c && c.total ? c.total : ''}"></div>
+      <div class="form-group"><label>已付 (¥)</label>
+        <input class="form-input" type="number" inputmode="decimal" id="f_paid" placeholder="0" value="${c ? (c.paid || 0) : 0}"></div>
+    </div>
+    <div class="form-row">
+      <div class="form-group"><label>交付月份 *</label>
+        ${monthFieldHTML(c && c.month ? c.month : thisMonthKey())}</div>
+      <div class="form-group"><label>交付日期</label>
+        <input class="form-input" type="date" id="f_date" value="${c && c.date ? c.date : ''}"></div>
+    </div>
+    <div class="form-group"><label>验收节点模板</label>
+      <div class="ms-template-row">
+        <button class="ms-template-btn" data-act="ms-tpl" data-id="single">一键出图</button>
+        <button class="ms-template-btn" data-act="ms-tpl" data-id="draft">草稿→成图</button>
+        <button class="ms-template-btn" data-act="ms-tpl" data-id="sketch">草图→线稿→上色→成图</button>
+      </div>
+    </div>
+    <div class="form-group"><label>验收节点（点圆点可切换完成状态）</label>
+      <div id="msList"></div>
+      <button class="btn btn-ghost btn-sm" data-act="ms-add">+ 添加节点</button>
+    </div>
+    <div class="form-group"><label>备注</label>
+      <textarea class="form-textarea" id="f_notes" placeholder="特殊要求、联系方式等...">${esc(c ? c.notes : '')}</textarea></div>
+    <div class="spacer"></div>`;
+  const footer = formId
+    ? `<button class="btn btn-danger" data-act="del-comm" data-id="${formId}">删除</button>
+       <button class="btn btn-ghost" data-act="close-sheet">取消</button>
+       <button class="btn btn-primary" data-act="save-comm">保存</button>`
+    : `<button class="btn btn-ghost" data-act="close-sheet">取消</button>
+       <button class="btn btn-primary" data-act="save-comm">保存</button>`;
+  Sheet.open({ title: formId ? '编辑稿件' : '新增稿件', body, footer });
+  renderMsEditor();
+}
+
+function renderMsEditor() {
+  const box = $('#msList');
+  if (!box) return;
+  if (!formMs.length) { box.innerHTML = '<p class="text-dim" style="font-size:13px;padding:6px 0 10px;">选择模板或添加自定义节点</p>'; return; }
+  box.innerHTML = formMs.map((m, i) => `
+    <div class="ms-item">
+      <input type="text" value="${esc(m.name)}" placeholder="节点名称" data-ms-name="${i}">
+      <label class="checkbox-row"><input type="checkbox" ${m.done ? 'checked' : ''} data-ms-done="${i}">完成</label>
+      <button class="remove-ms" data-act="ms-del" data-idx="${i}" aria-label="删除节点">×</button>
+    </div>`).join('');
+}
+function applyMsTemplate(type) {
+  if (type === 'single') formMs = [{ name: '完成', done: false }];
+  else if (type === 'draft') formMs = [{ name: '草稿', done: false }, { name: '成图', done: false }];
+  else if (type === 'sketch') formMs = [{ name: '草图', done: false }, { name: '线稿', done: false }, { name: '上色', done: false }, { name: '成图', done: false }];
+  renderMsEditor();
+  haptic();
+}
+function saveCommission() {
+  const title = $('#f_title').value.trim();
+  const total = parseFloat($('#f_total').value) || 0;
+  if (!title) { toast('请填写稿件名称', '✏️'); $('#f_title').focus(); return; }
+  if (total <= 0) { toast('请填写有效的总价', '💰'); $('#f_total').focus(); return; }
+  const data = {
+    id: formId || uid(),
+    title,
+    artist: $('#f_artist').value.trim(),
+    total,
+    paid: parseFloat($('#f_paid').value) || 0,
+    month: $('#f_month').value || thisMonthKey(),
+    date: $('#f_date').value || '',
+    notes: $('#f_notes').value.trim(),
+    milestones: formMs.filter(m => (m.name || '').trim() || m.done)
+  };
+  const idx = S.commissions.findIndex(x => x.id === data.id);
+  if (idx >= 0) S.commissions[idx] = data; else S.commissions.push(data);
+  save(true);
+  Sheet.close();
+  renderAll();
+  toast(formId ? '已保存修改' : '已添加稿件', '✅');
+}
+async function deleteCommission(id) {
+  const c = findComm(id);
+  if (!c) return;
+  const ok = await confirmDialog({
+    title: '删除稿件',
+    message: `「${c.title}」将被永久删除，无法恢复。`,
+    okText: '删除', danger: true
+  });
+  if (!ok) return;
+  S.commissions = S.commissions.filter(x => x.id !== id);
+  save(true);
+  Sheet.close();
+  renderAll();
+  toast('已删除', '🗑️');
+}
+function cardMenu(id) {
+  const c = findComm(id);
+  if (!c) return;
+  const done = statusOf(c) === 'done';
+  actionSheet({
+    title: c.title,
+    items: [
+      { icon: '✏️', label: '编辑稿件', act: () => openCommissionForm(id) },
+      { icon: done ? '↩️' : '✅', label: done ? '恢复为待付' : '标记已结清', act: () => settleCommission(id) },
+      { icon: '🗑️', label: '删除稿件', danger: true, act: () => deleteCommission(id) }
+    ]
+  });
+}
+function settleCommission(id) {
+  const c = findComm(id);
+  if (!c) return;
+  const done = statusOf(c) === 'done';
+  c.paid = done ? 0 : c.total;
+  if (!done && c.milestones && c.milestones.length) c.milestones.forEach(m => m.done = true);
+  save(true);
+  renderAll();
+  toast(done ? '已恢复为待付' : '已结清 🎉', done ? '↩️' : '✅');
+}
+function toggleMS(id, idx) {
+  const c = findComm(id);
+  if (!c || !c.milestones || !c.milestones[idx]) return;
+  c.milestones[idx].done = !c.milestones[idx].done;
+  save();
+  haptic();
+  renderAll();
+}
+
+/* =========================================================================
+   13. 保送卡 / 饼 表单
+   ========================================================================= */
+function openLabForm(type, id) {
+  const isG = type === 'guarantee';
+  const item = id ? (isG ? S.guarantees : S.wishes).find(x => x.id === id) : null;
+  const body = `
+    <input type="hidden" id="lf_type" value="${type}">
+    <input type="hidden" id="lf_id" value="${item ? item.id : ''}">
+    <div class="form-group"><label>${isG ? '画师名称 *' : '想约什么 *'}</label>
+      <input class="form-input" id="lf1" placeholder="${isG ? '如：画师A' : '如：庭花双人立绘'}" value="${esc(item ? (isG ? item.artist : item.title) : '')}"></div>
+    <div class="form-group"><label>${isG ? '备注（类型 / 约定等）' : '备注（风格 / 参考等）'}</label>
+      <input class="form-input" id="lf2" placeholder="${isG ? '如：半身立绘，含背景' : '如：赛博朋克风'}" value="${esc(item ? item.note : '')}"></div>
+    <div class="form-group"><label>${isG ? '约定价格 (¥)' : '预估价格 (¥)'}</label>
+      <input class="form-input" type="number" inputmode="decimal" id="lf3" placeholder="0" value="${item && (isG ? item.price : item.estPrice) ? (isG ? item.price : item.estPrice) : ''}"></div>
+    ${isG ? '' : `<div class="form-group"><label>目标画师（可留空）</label>
+      <input class="form-input" id="lf4" placeholder="如：画师B" value="${esc(item ? item.artist : '')}"></div>`}
+    <div class="spacer"></div>`;
+  const footer = item
+    ? `<button class="btn btn-danger" data-act="del-lab" data-id="${item.id}" data-type="${type}">删除</button>
+       <button class="btn btn-ghost" data-act="close-sheet">取消</button>
+       <button class="btn btn-primary" data-act="save-lab">保存</button>`
+    : `<button class="btn btn-ghost" data-act="close-sheet">取消</button>
+       <button class="btn btn-primary" data-act="save-lab">保存</button>`;
+  Sheet.open({ title: isG ? (item ? '编辑保送卡' : '🎫 新增保送卡') : (item ? '编辑饼' : '🥞 画个新饼'), body, footer });
+}
+function saveLabForm() {
+  const type = $('#lf_type').value;
+  const isG = type === 'guarantee';
+  const id = $('#lf_id').value;
+  const f1 = $('#lf1').value.trim();
+  if (!f1) { toast(isG ? '请填写画师名称' : '请填写想约的内容', '✏️'); return; }
+  const f2 = $('#lf2').value.trim();
+  const f3 = parseFloat($('#lf3').value) || 0;
+  const f4 = isG ? '' : (($('#lf4') || {}).value || '').trim();
+
+  if (isG) {
+    if (id) {
+      const g = S.guarantees.find(x => x.id === id);
+      Object.assign(g, { artist: f1, price: f3, note: f2 });
+    } else {
+      S.guarantees.push({ id: 'g_' + uid(), artist: f1, price: f3, note: f2, done: false });
+    }
+  } else {
+    if (id) {
+      const w = S.wishes.find(x => x.id === id);
+      Object.assign(w, { title: f1, estPrice: f3, note: f2, artist: f4 });
+    } else {
+      S.wishes.push({ id: 'w_' + uid(), title: f1, estPrice: f3, note: f2, artist: f4, done: false });
+    }
+  }
+  save(true);
+  Sheet.close();
+  renderLab();
+  toast('已保存', '✅');
+}
+async function deleteLab(type, id) {
+  const ok = await confirmDialog({ title: '删除', message: '确定删除这条记录吗？', okText: '删除', danger: true });
+  if (!ok) return;
+  if (type === 'guarantee') S.guarantees = S.guarantees.filter(x => x.id !== id);
+  else S.wishes = S.wishes.filter(x => x.id !== id);
+  save(true);
+  Sheet.close();
+  renderLab();
+  toast('已删除', '🗑️');
+}
+
+/* =========================================================================
+   14. 备份 / 恢复
+   ========================================================================= */
+function encodeData() {
+  return btoa(unescape(encodeURIComponent(JSON.stringify({
+    commissions: S.commissions, guarantees: S.guarantees, wishes: S.wishes, exportedAt: new Date().toISOString()
+  }))));
+}
+function openBackupSheet() {
+  const encoded = encodeData();
+  const body = `
+    <div class="kv"><span class="k">稿件</span><span class="v">${S.commissions.length} 条</span></div>
+    <div class="kv"><span class="k">保送卡</span><span class="v">${S.guarantees.length} 条</span></div>
+    <div class="kv"><span class="k">饼</span><span class="v">${S.wishes.length} 条</span></div>
+    <div class="divider"></div>
+    <div class="form-group"><label>导出备份</label>
+      <div style="display:flex;gap:8px;">
+        <button class="btn btn-primary btn-sm" style="flex:1;" data-act="copy-backup">📋 复制</button>
+        <button class="btn btn-ghost btn-sm" style="flex:1;" data-act="share-backup">📤 分享</button>
+        <button class="btn btn-ghost btn-sm" style="flex:1;" data-act="download-backup">⬇ 下载</button>
+      </div>
+      <div class="sheet-note" style="margin-top:8px;">复制后存到备忘录或发给自己，换手机时粘回来即可。</div>
+    </div>
+    <div class="form-group"><label>粘贴备份数据恢复</label>
+      <textarea class="form-textarea" id="importText" placeholder="粘贴之前复制的备份数据..." style="min-height:90px;"></textarea></div>
+    <div class="spacer"></div>`;
+  const footer = `<button class="btn btn-ghost" data-act="close-sheet">关闭</button>
+                  <button class="btn btn-primary" data-act="import-backup">恢复数据</button>`;
+  Sheet.open({ title: '📦 数据备份与恢复', body, footer });
+  Sheet.el._backup = encoded;
+}
+async function copyBackup() {
+  const text = Sheet.el._backup || encodeData();
+  try {
+    await navigator.clipboard.writeText(text);
+    toast('已复制，去粘贴保存吧', '📋');
+  } catch (e) {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); ta.remove();
+    toast('已复制', '📋');
+  }
+}
+async function shareBackup() {
+  const text = Sheet.el._backup || encodeData();
+  if (navigator.share) {
+    try { await navigator.share({ title: '约稿管家备份', text }); } catch (e) {}
+  } else { copyBackup(); }
+}
+function downloadBackup() {
+  const text = Sheet.el._backup || encodeData();
+  const blob = new Blob([text], { type: 'text/plain' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '约稿管家备份-' + new Date().toISOString().slice(0, 10) + '.txt';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 3000);
+  toast('已下载备份文件', '⬇️');
+}
+async function importBackup() {
+  const text = ($('#importText').value || '').trim();
+  if (!text) { toast('请先粘贴备份数据', '📋'); return; }
+  let data;
+  try {
+    data = JSON.parse(decodeURIComponent(escape(atob(text))));
+  } catch (e) { toast('数据格式不对，检查是否复制完整', '⚠️'); return; }
+  const ok = await confirmDialog({ title: '恢复数据', message: '恢复会覆盖当前全部数据，确定继续？', okText: '覆盖恢复', danger: true });
+  if (!ok) return;
+  if (Array.isArray(data)) {
+    S.commissions = data;
+  } else if (data && data.commissions) {
+    S.commissions = data.commissions || [];
+    S.guarantees = data.guarantees || [];
+    S.wishes = data.wishes || [];
+  } else { toast('无法识别的备份格式', '⚠️'); return; }
+  save(true);
+  Sheet.close();
+  renderAll();
+  toast('已恢复 ' + S.commissions.length + ' 条稿件', '✅');
+}
+
+/* =========================================================================
+   15. 添加到主屏幕
+   ========================================================================= */
+function isStandalone() {
+  return window.navigator.standalone === true ||
+    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+}
+function detectPlatform() {
+  const ua = navigator.userAgent;
+  const isIOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isAndroid = /Android/.test(ua);
+  const isSafari = /Safari/.test(ua) && !/CriOS|FxiOS|EdgiOS|Chrome|MicroMessenger|QQBrowser/.test(ua);
+  const inWeChat = /MicroMessenger/i.test(ua);
+  return { isIOS, isAndroid, isSafari, inWeChat, desktop: !isIOS && !isAndroid };
+}
+function openA2HSGuide() {
+  const p = detectPlatform();
+  let steps = [], tip = '';
+  if (isStandalone()) {
+    steps = [{ t: '已经在独立应用模式运行啦 🎉', d: '当前窗口就是「像 App 一样」的状态：没有地址栏、全屏显示、有自己的图标。' }];
+    tip = '如果图标没出现，可以删除后重新添加一次。';
+  } else if (p.isIOS) {
+    steps = [
+      { t: '用 Safari 打开本页面', d: p.inWeChat ? '微信内置浏览器不支持添加主屏幕，请点右上角「…」→ 在 Safari 中打开。' : '必须是 Safari，Chrome 等其他浏览器在 iOS 上不支持。' },
+      { t: '点击底部的「分享」按钮', d: '就是那个方框 + 向上箭头的图标 ⬆️（iPad 在顶部）。' },
+      { t: '向下滑动找到「添加到主屏幕」', d: '如果没看到，滑到列表最下方点「编辑操作」把它加进来。' },
+      { t: '点右上角「添加」', d: '桌面就会出现「约稿管家」图标，点开即全屏运行。' }
+    ];
+    tip = '添加后数据存在本机浏览器里，建议偶尔用「设置 → 数据备份」复制一份备份。';
+  } else if (p.isAndroid) {
+    steps = [
+      { t: '用 Chrome 打开本页面', d: p.inWeChat ? '请点右上角「…」→ 用浏览器打开。' : '' },
+      { t: '点击右上角「⋮」菜单', d: '' },
+      { t: '选择「添加到主屏幕」或「安装应用」', d: '部分机型显示为「安装应用」，效果一样。' },
+      { t: '确认添加', d: '桌面会出现「约稿管家」图标。' }
+    ];
+    tip = 'Chrome 里还可以在地址栏右侧直接点「安装」图标。';
+  } else {
+    steps = [
+      { t: '手机端体验更好', d: '本页针对手机做了适配，建议在 iPhone / Android 上打开并使用。' },
+      { t: 'iOS：Safari → 分享 → 添加到主屏幕', d: '' },
+      { t: 'Android：Chrome → ⋮ → 添加到主屏幕', d: '' },
+      { t: '桌面端：Chrome 地址栏右侧的安装图标', d: '' }
+    ];
+  }
+  const body = `
+    <div class="calc-intro" style="margin-bottom:8px;">
+      把「约稿管家」装到手机桌面，就能像真正的 App 一样：<b>全屏打开、有独立图标、离线也能用</b>。
+    </div>
+    ${steps.map((s, i) => `
+      <div class="guide-step">
+        <div class="guide-num">${i + 1}</div>
+        <div class="guide-txt"><b>${esc(s.t)}</b>${s.d ? '<br>' + esc(s.d) : ''}</div>
+      </div>`).join('')}
+    ${tip ? `<div class="tip-box">💡 ${esc(tip)}</div>` : ''}
+    <div class="spacer"></div>
+    <div class="sheet-note">当前状态：${isStandalone() ? '✅ 已在独立应用模式' : '🌐 浏览器模式'} · 系统：${p.isIOS ? 'iOS' : p.isAndroid ? 'Android' : '桌面端'}</div>`;
+  Sheet.open({ title: '📲 添加到主屏幕', body, footer: `<button class="btn btn-primary btn-block" data-act="close-sheet">知道了</button>` });
+}
+function renderA2HSBanner() {
+  const slot = $('#a2hsSlot');
+  const p = detectPlatform();
+  const dismissed = S.prefs.a2hsDismissed || 0;
+  const recent = Date.now() - dismissed < 7 * 24 * 3600 * 1000;
+  if (isStandalone() || recent || !(p.isIOS || p.isAndroid)) { slot.innerHTML = ''; return; }
+  slot.innerHTML = `
+    <div class="a2hs-banner" data-act="open-a2hs">
+      <span class="ab-ico">📲</span>
+      <span class="ab-txt">添加到主屏幕，像 App 一样用</span>
+      <button class="ab-close" data-act="dismiss-a2hs" aria-label="不再提示">✕</button>
+    </div>`;
+}
+
+/* =========================================================================
+   16. 设置
+   ========================================================================= */
+function openSettings() {
+  const theme = THEMES.find(t => t.id === S.prefs.theme) || THEMES[0];
+  const body = `
+    <div class="s-list">
+      <button class="s-item" data-act="open-theme">
+        <span class="si-ico">🎨</span>
+        <span>配色主题<span class="si-sub">当前：${theme.name}</span></span>
+        <span class="si-arrow">›</span>
+      </button>
+      <button class="s-item" data-act="open-a2hs">
+        <span class="si-ico">📲</span>
+        <span>添加到主屏幕<span class="si-sub">${isStandalone() ? '已在独立应用模式' : '让它更像一个 App'}</span></span>
+        <span class="si-arrow">›</span>
+      </button>
+      <button class="s-item" data-act="open-backup">
+        <span class="si-ico">📦</span>
+        <span>数据备份与恢复<span class="si-sub">${S.commissions.length} 张稿件</span></span>
+        <span class="si-arrow">›</span>
+      </button>
+      <button class="s-item" data-act="open-about">
+        <span class="si-ico">ℹ️</span>
+        <span>关于与使用提示</span>
+        <span class="si-arrow">›</span>
+      </button>
+      <button class="s-item danger" data-act="wipe">
+        <span class="si-ico">🗑️</span>
+        <span>清空所有数据</span>
+        <span class="si-arrow">›</span>
+      </button>
+    </div>
+    <div class="spacer"></div>`;
+  Sheet.open({ title: '⚙️ 设置', body, footer: `<button class="btn btn-ghost btn-block" data-act="close-sheet">关闭</button>` });
+}
+function openAbout() {
+  const body = `
+    <div class="calc-intro">
+      <b>约稿尾款管家</b> · V13<br>
+      一个纯本地的约稿记账小工具，数据只存在你自己的设备里，不上传任何服务器。
+    </div>
+    <div class="calc-intro" style="background:var(--green-soft);color:var(--green);">
+      从旧版升级不会丢数据：打开新版时会自动把旧记录导入过来，旧数据也原样保留着。
+    </div>
+    <div class="s-list">
+      <div class="s-item"><span class="si-ico">👆</span><span>点卡片<span class="si-sub">编辑稿件</span></span></div>
+      <div class="s-item"><span class="si-ico">✋</span><span>长按卡片<span class="si-sub">快速结清 / 删除</span></span></div>
+      <div class="s-item"><span class="si-ico">⚪️</span><span>点进度圆点<span class="si-sub">切换节点完成状态</span></span></div>
+      <div class="s-item"><span class="si-ico">🎨</span><span>右上角调色板<span class="si-sub">换配色，共 8 套</span></span></div>
+    </div>
+    <div class="spacer"></div>
+    <div class="sheet-note">数据保存在浏览器本地存储中。清理浏览器数据会一并清空，记得定期备份 📦</div>
+    <div class="spacer"></div>`;
+  Sheet.open({ title: 'ℹ️ 关于', body, footer: `<button class="btn btn-primary btn-block" data-act="close-sheet">好的</button>` });
+}
+async function wipeAll() {
+  const ok = await confirmDialog({
+    title: '清空所有数据',
+    message: '将删除全部稿件、保送卡和饼，且无法恢复。建议先做一次备份。',
+    okText: '全部清空', danger: true
+  });
+  if (!ok) return;
+  const theme = S.prefs.theme, view = S.prefs.view;
+  S = freshState();
+  S.prefs.theme = theme; S.prefs.view = view;
+  save(true);
+  Sheet.close();
+  renderAll();
+  toast('已清空', '🗑️');
+}
+
+/* =========================================================================
+   17. 事件委托
+   ========================================================================= */
+const ACTIONS = {
+  nav: el => {
+    const v = el.dataset.view;
+    haptic();
+    if (S.prefs.view === v) { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }  // 再点一次回到顶部
+    go(v);
+  },
+  add: () => openCommissionForm(''),
+  edit: el => openCommissionForm(el.dataset.id),
+  'card-menu': el => cardMenu(el.dataset.id),
+  ms: el => toggleMS(el.dataset.id, parseInt(el.dataset.idx)),
+  'toggle-month': el => toggleMonth(el.dataset.id),
+  filter: el => { listFilter = el.dataset.id; renderList(); haptic(); },
+  'prev-month': () => { currentMonth.setMonth(currentMonth.getMonth() - 1); renderSchedule(); },
+  'next-month': () => { currentMonth.setMonth(currentMonth.getMonth() + 1); renderSchedule(); },
+  'this-month': () => { currentMonth = new Date(); renderSchedule(); },
+  'quick-pick': el => {
+    const c = findComm(el.dataset.id);
+    if (!c) return;
+    $('#calcTotal').value = c.total;
+    if (!$('#calcPlatform').value) $('#calcPlatform').value = 50;
+    calcOffline(); haptic();
+  },
+  lab: el => switchLab(el.dataset.lab),
+  'add-guarantee': () => openLabForm('guarantee'),
+  'add-wish': () => openLabForm('wish'),
+  'edit-guarantee': el => openLabForm('guarantee', el.dataset.id),
+  'edit-wish': el => openLabForm('wish', el.dataset.id),
+  'toggle-guarantee': el => {
+    const g = S.guarantees.find(x => x.id === el.dataset.id);
+    if (!g) return;
+    g.done = !g.done; save(true); renderGuarantee(); haptic();
+  },
+  'toggle-wish': el => {
+    const w = S.wishes.find(x => x.id === el.dataset.id);
+    if (!w) return;
+    w.done = !w.done; save(true); renderWishes(); haptic();
+  },
+  'del-guarantee': el => deleteLab('guarantee', el.dataset.id),
+  'del-wish': el => deleteLab('wish', el.dataset.id),
+  'ms-tpl': el => applyMsTemplate(el.dataset.id),
+  'ms-add': () => { formMs.push({ name: '', done: false }); renderMsEditor(); },
+  'ms-del': el => { formMs.splice(parseInt(el.dataset.idx), 1); renderMsEditor(); },
+  'save-comm': () => saveCommission(),
+  'del-comm': el => deleteCommission(el.dataset.id),
+  'save-lab': () => saveLabForm(),
+  'del-lab': el => deleteLab(el.dataset.type, el.dataset.id),
+  'close-sheet': () => Sheet.close(),
+  'open-theme': () => openThemeSheet(),
+  'set-theme': el => { applyTheme(el.dataset.id); openThemeSheet(); haptic(12); },
+  'open-settings': () => openSettings(),
+  'open-about': () => openAbout(),
+  'open-backup': () => openBackupSheet(),
+  'open-a2hs': () => openA2HSGuide(),
+  'dismiss-a2hs': () => { S.prefs.a2hsDismissed = Date.now(); save(true); $('#a2hsSlot').innerHTML = ''; },
+  'copy-backup': () => copyBackup(),
+  'share-backup': () => shareBackup(),
+  'download-backup': () => downloadBackup(),
+  'import-backup': () => importBackup(),
+  wipe: () => wipeAll()
+};
+
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-act]');
+  if (!el) return;
+  const fn = ACTIONS[el.dataset.act];
+  if (!fn) return;
+  if (el.dataset.act === 'card-menu' || el.dataset.act === 'ms' || el.dataset.act === 'dismiss-a2hs') e.stopPropagation();
+  fn(el, e);
+});
+
+/* 长按卡片 → 快捷操作 */
+let lpTimer = null, lpStart = null, lpFired = false;
+document.addEventListener('touchstart', e => {
+  const card = e.target.closest('[data-longpress]');
+  if (!card) return;
+  const t = e.touches[0];
+  lpStart = { x: t.clientX, y: t.clientY };
+  lpFired = false;
+  clearTimeout(lpTimer);
+  lpTimer = setTimeout(() => {
+    lpFired = true;
+    haptic(18);
+    cardMenu(card.dataset.lp);
+  }, 480);
+}, { passive: true });
+document.addEventListener('touchmove', e => {
+  if (!lpTimer || !lpStart) return;
+  const t = e.touches[0];
+  if (Math.abs(t.clientX - lpStart.x) > 8 || Math.abs(t.clientY - lpStart.y) > 8) {
+    clearTimeout(lpTimer); lpTimer = null;
+  }
+}, { passive: true });
+document.addEventListener('touchend', e => {
+  clearTimeout(lpTimer); lpTimer = null;
+  if (lpFired) { lpFired = false; e.preventDefault(); }
+});
+document.addEventListener('touchcancel', () => { clearTimeout(lpTimer); lpTimer = null; });
+
+/* 输入联动 */
+function bindInputs() {
+  $('#searchInput').addEventListener('input', onSearch);
+  $('#calcTotal').addEventListener('input', calcOffline);
+  $('#calcPlatform').addEventListener('input', calcOffline);
+  ['pr_salary', 'pr_other_income', 'pr_loan', 'pr_other_expense'].forEach(id => {
+    $('#' + id).addEventListener('input', calcPressure);
+  });
+  $('#pr_tail').addEventListener('input', e => { e.target.dataset.touched = '1'; calcPressure(); });
+}
+
+/* 表单内输入（节点名称 / 勾选）委托 */
+document.addEventListener('input', e => {
+  const t = e.target;
+  if (t.dataset && t.dataset.msName !== undefined) {
+    const i = parseInt(t.dataset.msName);
+    if (formMs[i]) formMs[i].name = t.value;
+  }
+});
+document.addEventListener('change', e => {
+  const t = e.target;
+  if (t.dataset && t.dataset.msDone !== undefined) {
+    const i = parseInt(t.dataset.msDone);
+    if (formMs[i]) formMs[i].done = t.checked;
+  }
+});
+
+/* 顶栏滚动阴影 */
+window.addEventListener('scroll', () => {
+  $('#topBar').classList.toggle('scrolled', window.scrollY > 6);
+}, { passive: true });
+
+/* 键盘 & 手势 */
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { Sheet.close(); $('#dialogLayer').classList.remove('show'); } });
+['gesturestart', 'gesturechange', 'gestureend'].forEach(ev =>
+  document.addEventListener(ev, e => e.preventDefault(), { passive: false }));
+
+/* 图标 + PWA 元数据 */
+function setupPWA() {
+  if (location.protocol !== 'http:' && location.protocol !== 'https:') return;
+  try {
+    const icon = ($('link[rel="apple-touch-icon"]') || {}).href || '';
+    const base = location.href.replace(/[^/]*$/, '');
+    const manifest = {
+      name: '约稿尾款管家', short_name: '约稿管家',
+      start_url: location.href, scope: base,
+      display: 'standalone', orientation: 'portrait',
+      background_color: '#f2f2f7', theme_color: '#f2f2f7', lang: 'zh-CN',
+      icons: icon ? [{ src: icon, sizes: '180x180', type: 'image/png', purpose: 'any' }] : []
+    };
+    const url = URL.createObjectURL(new Blob([JSON.stringify(manifest)], { type: 'application/manifest+json' }));
+    let link = $('link[rel="manifest"]');
+    if (!link) { link = document.createElement('link'); link.rel = 'manifest'; document.head.appendChild(link); }
+    link.href = url;
+  } catch (e) {}
+}
+
+/* =========================================================================
+   18. 启动
+   ========================================================================= */
+function emptyState(icon, title, sub, act, btnText) {
+  return `<div class="empty-state">
+    <div class="icon">${icon}</div>
+    <p>${esc(title)}</p>
+    ${sub ? `<div class="es-sub">${esc(sub)}</div>` : ''}
+    ${act ? `<button class="btn btn-primary btn-sm" data-act="${act}">${esc(btnText)}</button>` : ''}
+  </div>`;
+}
+
+function init() {
+  applyTheme(S.prefs.theme || 'light');
+  bindInputs();
+  go(S.prefs.view || 'dashboard');
+  setupPWA();
+  // 从旧版升级上来的用户：明确告诉他们数据还在
+  if (MIGRATED > 0) setTimeout(() => toast('已从旧版导入 ' + MIGRATED + ' 条记录', '📦'), 700);
+  // 首次使用引导
+  if (!S.prefs.seen) {
+    S.prefs.seen = 1; save(true);
+    setTimeout(() => toast('长按卡片可以快速结清或删除', '💡'), MIGRATED > 0 ? 3200 : 900);
+  }
+}
+init();
+</script>
+</body>
+</html>
